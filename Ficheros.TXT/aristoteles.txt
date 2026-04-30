@@ -1,5 +1,6 @@
 El pensamiento condiciona la acción
 la acción determina el comportamiento.
+el habito estructura el caracter
 
 Modificar Guapas :)
 <<<<<<< HEAD
@@ -7,5 +8,9 @@ Esto es una prueba de las ramas de Github :)
 =======
 
 Como que guapas tio
+<<<<<<< HEAD
 Vale perdon, queria decir divas :)
 >>>>>>> main
+=======
+agustin reina
+>>>>>>> cd4d289aca9c275b3e3fb1c80b119e8e044b9b14
