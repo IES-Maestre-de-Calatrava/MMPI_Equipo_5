@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 El pensamiento condiciona la acción
 la acción determina el comportamiento.
 el habito estructura el caracter
@@ -17,3 +18,6 @@ agustin reina
 >>>>>>> cd4d289aca9c275b3e3fb1c80b119e8e044b9b14
 
 
+=======
+Aristoteles lo que era es un payaso
+>>>>>>> 95b83a0abc30ec528c54cfd442916cb0d376d2ed
