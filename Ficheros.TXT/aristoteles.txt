@@ -2,4 +2,9 @@ El pensamiento condiciona la acción
 la acción determina el comportamiento.
 
 Modificar Guapas :)
+<<<<<<< HEAD
 Esto es una prueba de las ramas de Github :)
+=======
+
+Como que guapas tio
+>>>>>>> main
