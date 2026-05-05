@@ -24,12 +24,12 @@
                     <p class="text-muted small">Únete a la plataforma de movilidad infantil</p>
                 </div>
 
-                <form>
+                <form id="formRegistro">
                     <div class="mb-3">
                         <label class="form-label fw-semibold">Nombre Completo</label>
                         <div class="input-group">
                             <span class="input-group-text bg-light border-0"><i class="bi bi-person"></i></span>
-                            <input type="text" class="form-control bg-light border-0" placeholder="Nombre Completo" required>
+                            <input type="text" id="nombreRegistro" class="form-control bg-light border-0" placeholder="Nombre Completo" required>
                         </div>
                     </div>
 
@@ -37,7 +37,7 @@
                         <label class="form-label fw-semibold">Correo electrónico</label>
                         <div class="input-group">
                             <span class="input-group-text bg-light border-0"><i class="bi bi-envelope"></i></span>
-                            <input type="email" class="form-control bg-light border-0" placeholder="Correo Electrónico" required>
+                            <input type="email" id="emailRegistro" class="form-control bg-light border-0" placeholder="Correo Electrónico" required>
                         </div>
                     </div>
 
@@ -46,7 +46,7 @@
                         <label class="form-label fw-semibold">¿Quién eres?</label>
                         <div class="input-group">
                             <span class="input-group-text bg-light border-0"><i class="bi bi-person-badge"></i></span>
-                            <select class="form-select bg-light border-0" required>
+                            <select id="perfilRegistro" class="form-select bg-light border-0" required>
                                 <option value="" selected disabled>Selecciona tu perfil</option>
                                 <option value="fisio">Fisioterapeuta</option>
                             </select>
@@ -57,7 +57,7 @@
                         <label class="form-label fw-semibold">Contraseña</label>
                         <div class="input-group">
                             <span class="input-group-text bg-light border-0"><i class="bi bi-lock"></i></span>
-                            <input type="password" class="form-control bg-light border-0" placeholder="Mínimo 8 caracteres" required>
+                            <input type="password" id="contrasenaRegistro" class="form-control bg-light border-0" placeholder="Mínimo 8 caracteres" required>
                         </div>
                     </div>
 
@@ -75,6 +75,8 @@
             </div>
         </div>
     </div>
+
+    <script src="js/script.js"></script>
 
 </body>
 </html>
