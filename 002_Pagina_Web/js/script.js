@@ -1,89 +1,53 @@
-const API_URL = "http://localhost:8085/acceso";
-
-const formLogin = document.getElementById("formLogin");
-const formRegistro = document.getElementById("formRegistro");
-const formRecuperar = document.getElementById("formRecuperar");
-
-if (formLogin) {
-    formLogin.addEventListener("submit", async (e) => {
-        e.preventDefault();
-
-        const email = document.getElementById("emailLogin").value;
-        const contrasena = document.getElementById("contrasenaLogin").value;
-
-        try {
-            const response = await fetch(`${API_URL}/find`);
-
-            if (!response.ok) {
-                throw new Error("Error al comprobar el inicio de sesión");
-            }
-
-            const accesos = await response.json();
-
-            const usuarioEncontrado = accesos.find(acceso =>
-                acceso.usuario === email && acceso.contrasena === contrasena
-            );
-
-            if (usuarioEncontrado) {
-                alert("Inicio de sesión correcto");
-                window.location.href = "principal.html";
-            } else {
-                alert("Correo o contraseña incorrectos");
-            }
-
-        } catch (error) {
-            alert(error.message);
-        }
-    });
-}
-
 if (formRegistro) {
     formRegistro.addEventListener("submit", async (e) => {
         e.preventDefault();
 
-        const nombre = document.getElementById("nombreRegistro").value;
-        const email = document.getElementById("emailRegistro").value;
-        const perfil = document.getElementById("perfilRegistro").value;
-        const contrasena = document.getElementById("contrasenaRegistro").value;
+        const nombre = document.getElementById("nombre").value;
+        const apellidos = document.getElementById("apellidos").value;
+        const email = document.getElementById("email").value;
+        const dni = document.getElementById("dni").value;
+        const telefono = document.getElementById("telefono").value;
+        const direccion = document.getElementById("direccion").value;
+        const perfil = document.getElementById("perfil").value;
+        const contrasena = document.getElementById("pass1").value;
 
         if (contrasena.length < 8) {
             alert("La contraseña debe tener mínimo 8 caracteres");
             return;
         }
 
+        // 1. GUARDAR ACCESO
         const acceso = {
             usuario: email,
             contrasena: contrasena
         };
 
+        // 2. GUARDAR FISIOTERAPEUTA (si aplica)
+        const fisioterapeuta = {
+            dniFisio: dni,
+            nombre: nombre,
+            apellidos: apellidos,
+            email: email,
+            telefono: telefono,
+            domicilio: direccion,
+            idAcceso: null // si luego lo conectas
+        };
+
         try {
-            const comprobarResponse = await fetch(`${API_URL}/find`);
-
-            if (!comprobarResponse.ok) {
-                throw new Error("Error al comprobar usuarios existentes");
-            }
-
-            const accesos = await comprobarResponse.json();
-
-            const existeUsuario = accesos.find(acceso =>
-                acceso.usuario === email
-            );
-
-            if (existeUsuario) {
-                alert("Ese correo ya está registrado");
-                return;
-            }
-
-            const response = await fetch(`${API_URL}/create`, {
+            // ACCESO
+            await fetch("http://localhost:8085/acceso/create", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(acceso)
             });
 
-            if (!response.ok) {
-                throw new Error("Error al registrar usuario");
+            // FISIOTERAPEUTA (solo si es fisio)
+            if (perfil === "fisio") {
+                await fetch("http://localhost:8085/fisioterapeuta/create", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(fisioterapeuta)
+                });
             }
 
             alert("Usuario registrado correctamente");
@@ -91,39 +55,7 @@ if (formRegistro) {
             window.location.href = "index.html";
 
         } catch (error) {
-            alert(error.message);
-        }
-    });
-}
-
-if (formRecuperar) {
-    formRecuperar.addEventListener("submit", async (e) => {
-        e.preventDefault();
-
-        const email = document.getElementById("emailRecuperar").value;
-
-        try {
-            const response = await fetch(`${API_URL}/find`);
-
-            if (!response.ok) {
-                throw new Error("Error al comprobar el correo");
-            }
-
-            const accesos = await response.json();
-
-            const usuarioEncontrado = accesos.find(acceso =>
-                acceso.usuario === email
-            );
-
-            if (usuarioEncontrado) {
-                alert("El correo existe. En una app real aquí se enviaría un enlace de recuperación.");
-                window.location.href = "index.html";
-            } else {
-                alert("No existe ninguna cuenta con ese correo");
-            }
-
-        } catch (error) {
-            alert(error.message);
+            alert("Error al registrar: " + error.message);
         }
     });
 }
