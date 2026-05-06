@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle Paciente - MMPI</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="styles/inicio.css">
+    <!-- Librería para gráficos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <div class="container-fluid p-4 bg-dark-blue min-vh-100">
+        <!-- Header -->
+        <header class="header-main d-flex align-items-center justify-content-between mb-4">
+            <div class="d-flex align-items-center gap-3 bg-white rounded-pill px-3 py-2 flex-grow-1 me-5">
+                <img src="../003_MMPI/media/basicos/final.png" alt="Logo" class="mini-logo">
+                <span class="fw-bold fs-5">“Equipo_5”</span>
+            </div>
+            <div class="d-flex gap-2">
+                <button class="btn btn-navy"><i class="bi bi-search"></i> Búsqueda</button>
+                <button class="btn btn-navy-icon"><i class="bi bi-bell"></i></button>
+            </div>
+        </header>
+
+        <!-- Contenedor Blanco -->
+        <div class="main-card shadow">
+            
+            <!-- Info del Paciente -->
+            <div class="patient-header-info mb-4">
+                <div class="row align-items-center">
+                    <div class="col-auto">
+                        <div class="avatar-box bg-white p-2 rounded-4">
+                            <img src="media/imgs/nino.png" alt="Alonso">
+                        </div>
+                    </div>
+                    <div class="col text-white">
+                        <h2 class="fw-bold mb-1">ALONSO MUÑOZ</h2>
+                        <div class="patient-meta">
+                            <p><strong>Edad:</strong> 6 años</p>
+                            <p><strong>Localidad:</strong> Daimiel</p>
+                            <p><strong>Teléfono:</strong> 652-789-980</p>
+                            <p><strong>Padres:</strong> Manolo Escobar / María Sánchez</p>
+                        </div>
+                        <span class="badge bg-white text-dark rounded-pill px-3 py-2 mt-2">Nivel: Experto</span>
+                    </div>
+                    <div class="col-auto d-flex flex-column gap-2">
+                        <button class="btn btn-light btn-report-custom"><i class="bi bi-file-earmark-pdf"></i> Descargar Reporte Diario</button>
+                        <button class="btn btn-light btn-report-custom"><i class="bi bi-file-earmark-pdf"></i> Descargar Reporte Semanal</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gráficos y Selector -->
+            <div class="row g-3">
+                <div class="col-md-2">
+                    <button class="btn btn-navy w-100 py-3"><i class="bi bi-calendar3"></i> Seleccionar Día</button>
+                </div>
+                <div class="col-md-5">
+                    <div class="chart-container">
+                        <canvas id="pieChart"></canvas>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="chart-container">
+                        <canvas id="barChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Observaciones -->
+            <div class="observations-section mt-4">
+                <div class="obs-header">OBSERVACIONES</div>
+                <div class="obs-body position-relative">
+                    <textarea class="form-control" placeholder="Introduce tus observaciones"></textarea>
+                    <button class="btn btn-save-obs shadow">
+                        <i class="bi bi-floppy-fill"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Botón Volver -->
+        <div class="mt-4">
+            <a href="inicio.html" class="btn btn-white-back px-4">
+                <i class="bi bi-reply-fill"></i> Volver a Inicio
+            </a>
+        </div>
+    </div>
+
+    <script src="js/charts.js"></script>
+</body>
+</html>
