@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro MMPI - Crear Cuenta</title>
+    <!-- CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../002_Pagina_Web/styles/style.css">
+    <link rel="icon" type="image/x-icon" href="..//002_Pagina_Web/media/imgs_important/favicon.ico">
+</head>
+<body class="bg-light">
+
+    <div class="container d-flex justify-content-center align-items-center min-vh-100 py-5">
+        <div class="card registro-card shadow-sm border-0">
+            <div class="card-body p-4 p-md-5">
+                
+                <!-- Logo y Título -->
+                <div class="text-center mb-5">
+                    <img src="../002_Pagina_Web/media/imgs_important/final.png" alt="Logo MMPI" class="app-logo mb-3">
+                    <h2 class="fw-bold text-dark">Crea tu cuenta</h2>
+                    <p class="text-muted">Únete a la plataforma de movilidad infantil</p>
+                </div>
+
+                <form id="formRegistro">
+                    <div class="row g-4">
+                        <!-- Nombre -->
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold">Nombre</label>
+                            <div class="input-group custom-input">
+                                <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
+                                <input type="text" id="nombre" class="form-control" placeholder="Nombre" required>
+                            </div>
+                        </div>
+                        <!-- Apellidos -->
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold">Apellidos</label>
+                            <div class="input-group custom-input">
+                                <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
+                                <input type="text" id="apellidos" class="form-control" placeholder="Apellidos" required>
+                            </div>
+                        </div>
+                        <!-- Correo -->
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold">Correo electrónico</label>
+                            <div class="input-group custom-input">
+                                <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                                <input type="email" id="email" class="form-control" placeholder="Correo Electrónico" required>
+                            </div>
+                        </div>
+
+                        <!-- DNI -->
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">DNI</label>
+                            <div class="input-group custom-input">
+                                <span class="input-group-text"><i class="bi bi-card-text"></i></span>
+                                <input type="text" id="dni" class="form-control" placeholder="DNI con letra" required>
+                            </div>
+                        </div>
+                        <!-- Teléfono -->
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Teléfono</label>
+                            <div class="input-group custom-input">
+                                <span class="input-group-text"><i class="bi bi-telephone-fill"></i></span>
+                                <input type="tel" id="telefono" class="form-control" placeholder="Teléfono" required>
+                            </div>
+                        </div>
+
+                        <!-- Perfil -->
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">¿Quién eres?</label>
+                            <div class="input-group custom-input">
+                                <span class="input-group-text"><i class="bi bi-smartphone"></i></span>
+                                <select id="perfil" class="form-select" required>
+                                    <option value="" selected disabled>Selecciona tu perfil</option>
+                                    <option value="fisio">Fisioterapeuta</option>
+                                    <option value="padre">Padre/Tutor</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- Dirección -->
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Dirección</label>
+                            <div class="input-group custom-input">
+                                <span class="input-group-text"><i class="bi bi-geo-alt-fill"></i></span>
+                                <input type="text" id="direccion" class="form-control" placeholder="Dirección" required>
+                            </div>
+                        </div>
+
+                        <!-- Contraseña -->
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Contraseña</label>
+                            <div class="input-group custom-input">
+                                <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+                                <input type="password" id="pass1" class="form-control" placeholder="Mínimo 8 caracteres" required>
+                            </div>
+                        </div>
+                        <!-- Confirmar Contraseña -->
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Confirmar Contraseña</label>
+                            <div class="input-group custom-input">
+                                <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+                                <input type="password" id="pass2" class="form-control" placeholder="Mínimo 8 caracteres" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Botón Registrarse -->
+                    <div class="text-center mt-5">
+                        <button type="submit" class="btn btn-primary btn-registro px-5">Registrarse</button>
+                    </div>
+                </form>
+
+                <!-- Footer -->
+                <div class="text-center mt-4">
+                    <p class="text-muted">¿Tienes ya cuenta? - <a href="index.html" class="fw-bold text-decoration-none" style="color: #000033;">Iniciar Sesión</a></p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
