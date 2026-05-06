@@ -1,4 +1,0 @@
-INDEX VERSION 1.134+C:\Users\The JOSER_15\Documents\GitHub\MMPI_Equipo_5\MMPI_API_Eclipse\.metadata\.plugins\org.eclipse.jdt.core
-2849178224.index
-1865797976.index
-622170127.index
