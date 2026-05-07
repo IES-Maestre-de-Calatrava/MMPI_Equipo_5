@@ -85,3 +85,53 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("formRegistroPaciente");
+    const btnLimpiar = document.getElementById("btnLimpiar");
+
+    // Lógica para el botón Limpiar
+    btnLimpiar.addEventListener("click", () => {
+        if (confirm("¿Estás seguro de que quieres borrar todos los campos?")) {
+            form.reset();
+        }
+    });
+
+    // Lógica para el Guardado
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        // Capturamos los datos
+        const paciente = {
+            dni: document.getElementById("dni").value,
+            nombre: document.getElementById("nombre").value,
+            apellidos: document.getElementById("apellidos").value,
+            email: document.getElementById("email").value,
+            telefono: document.getElementById("telefono").value,
+            domicilio: document.getElementById("direccion").value
+        };
+
+        try {
+            // Ruta relativa al servidor Spring Boot
+            const response = await fetch("/api/pacientes/create", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(paciente)
+            });
+
+            if (response.ok) {
+                alert("Paciente registrado con éxito");
+                window.location.href = "/inicio.html";
+            } else {
+                const errorData = await response.json();
+                alert("Error al registrar: " + (errorData.message || "Error desconocido"));
+            }
+
+        } catch (error) {
+            console.error("Error en la petición:", error);
+            alert("No se pudo conectar con el servidor.");
+        }
+    });
+});
