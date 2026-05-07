@@ -1,61 +1,87 @@
-if (formRegistro) {
-    formRegistro.addEventListener("submit", async (e) => {
-        e.preventDefault();
+document.addEventListener('DOMContentLoaded', function() {
 
-        const nombre = document.getElementById("nombre").value;
-        const apellidos = document.getElementById("apellidos").value;
-        const email = document.getElementById("email").value;
-        const dni = document.getElementById("dni").value;
-        const telefono = document.getElementById("telefono").value;
-        const direccion = document.getElementById("direccion").value;
-        const perfil = document.getElementById("perfil").value;
-        const contrasena = document.getElementById("pass1").value;
+    // ==========================================
+    // 1. LÓGICA DE INICIO DE SESIÓN (LOGIN)
+    // ==========================================
+    const formLogin = document.getElementById('formLogin');
+    if (formLogin) {
+        formLogin.addEventListener('submit', async (event) => {
+            event.preventDefault(); // Detiene la recarga de página
 
-        if (contrasena.length < 8) {
-            alert("La contraseña debe tener mínimo 8 caracteres");
-            return;
-        }
+            const email = document.getElementById('emailLogin').value;
+            const contrasena = document.getElementById('contrasenaLogin').value;
 
-        // 1. GUARDAR ACCESO
-        const acceso = {
-            usuario: email,
-            contrasena: contrasena
-        };
-
-        // 2. GUARDAR FISIOTERAPEUTA (si aplica)
-        const fisioterapeuta = {
-            dniFisio: dni,
-            nombre: nombre,
-            apellidos: apellidos,
-            email: email,
-            telefono: telefono,
-            domicilio: direccion,
-            idAcceso: null // si luego lo conectas
-        };
-
-        try {
-            // ACCESO
-            await fetch("http://localhost:8085/acceso/create", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(acceso)
-            });
-
-            // FISIOTERAPEUTA (solo si es fisio)
-            if (perfil === "fisio") {
-                await fetch("http://localhost:8085/fisioterapeuta/create", {
+            try {
+                const response = await fetch("http://localhost:8086/acceso/login", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(fisioterapeuta)
+                    body: JSON.stringify({ usuario: email, contrasena: contrasena })
                 });
+
+                if (response.ok) {
+                    window.location.href = 'inicio.html'; //
+                } else {
+                    alert("Usuario o contraseña incorrectos");
+                }
+            } catch (error) {
+                console.error("Error en login:", error);
+                alert("Error de conexión. Asegúrate de que el backend 8086 esté encendido y tenga @CrossOrigin.");
             }
+        });
+    }
 
-            alert("Usuario registrado correctamente");
-            formRegistro.reset();
-            window.location.href = "index.html";
+    // ==========================================
+    // 2. LÓGICA DE REGISTRO
+    // ==========================================
+    const formRegistro = document.getElementById('formRegistro');
+    if (formRegistro) {
+        formRegistro.addEventListener("submit", async (e) => {
+            e.preventDefault();
 
-        } catch (error) {
-            alert("Error al registrar: " + error.message);
-        }
-    });
-}
+            const datos = {
+                nombre: document.getElementById("nombre").value,
+                apellidos: document.getElementById("apellidos").value,
+                email: document.getElementById("email").value,
+                dni: document.getElementById("dni").value,
+                telefono: document.getElementById("telefono").value,
+                direccion: document.getElementById("direccion").value,
+                perfil: document.getElementById("perfil").value,
+                contrasena: document.getElementById("pass1").value
+            };
+
+            const acceso = { usuario: datos.email, contrasena: datos.contrasena };
+            const fisio = {
+                dniFisio: datos.dni,
+                nombre: datos.nombre,
+                apellidos: datos.apellidos,
+                email: datos.email,
+                telefono: datos.telefono,
+                domicilio: datos.direccion
+            };
+
+            try {
+                // Registro en tabla Acceso
+                await fetch("http://localhost:8086/acceso/create", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(acceso)
+                });
+
+                // Registro en tabla Fisioterapeuta si aplica
+                if (datos.perfil === "fisio") {
+                    await fetch("http://localhost:8086/fisioterapeuta/create", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(fisio)
+                    });
+                }
+
+                alert("Registro completado con éxito");
+                window.location.href = "index.html"; //
+            } catch (error) {
+                console.error("Error en registro:", error);
+                alert("Error al conectar con el servidor. Revisa el puerto 8086.");
+            }
+        });
+    }
+});
