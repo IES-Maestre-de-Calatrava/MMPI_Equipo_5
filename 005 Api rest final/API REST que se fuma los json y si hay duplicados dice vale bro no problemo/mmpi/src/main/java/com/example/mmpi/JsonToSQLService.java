@@ -7,7 +7,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
-import java.sql.Timestamp;
+import java.sql.Time;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Iterator;
 
 @Service
@@ -24,9 +27,9 @@ public class JsonToSQLService {
 
     public void loadJsonToDatabase() {
 
-    	String sql = "INSERT INTO SESION " +
-    	        "(ID_SESION, NOMBRE_PACIENTE, ACELERACIONES_BRUSCAS, COLISIONES, ESTABILIDAD, NIVEL, PARADAS_BRUSCAS, SCORE, TIEMPO_MOVIMIENTO, TIEMPO_SESION, DNI_FISIO, DNI_PACIENTE, ID_DISPOSITIVO) " +
-    	        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO SESION " +
+                "(ID_SESION, NOMBRE_PACIENTE, ACELERACIONES_BRUSCAS, COLISIONES, ESTABILIDAD, NIVEL, PARADAS_BRUSCAS, SCORE, TIEMPO_MOVIMIENTO, AÑO_SESION, MES_SESION, DIA_SESION, TIEMPO_SESION, DNI_FISIO, DNI_PACIENTE) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         ObjectMapper mapper = new ObjectMapper();
 
@@ -85,8 +88,16 @@ public class JsonToSQLService {
 
                             long rawTimestamp = data.get("timestamp").asLong();
 
-                            Timestamp tiempoSesion = new Timestamp(rawTimestamp * 1000
+                            LocalDateTime fechaHora = LocalDateTime.ofInstant(
+                                    Instant.ofEpochSecond(rawTimestamp),
+                                    ZoneId.systemDefault()
                             );
+
+                            int añoSesion = fechaHora.getYear();
+                            int mesSesion = fechaHora.getMonthValue();
+                            int diaSesion = fechaHora.getDayOfMonth();
+
+                            Time tiempoSesion = Time.valueOf(fechaHora.toLocalTime());
 
                             jdbcTemplate.update(sql,
                                     idSesion,
@@ -98,8 +109,10 @@ public class JsonToSQLService {
                                     paradas,
                                     score,
                                     tiempoMovimiento,
+                                    añoSesion,
+                                    mesSesion,
+                                    diaSesion,
                                     tiempoSesion,
-                                    null,
                                     null,
                                     null
                             );
