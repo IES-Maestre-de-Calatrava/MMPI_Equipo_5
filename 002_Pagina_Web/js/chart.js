@@ -88,3 +88,136 @@ document.getElementById('fechaSeleccionada').addEventListener('change', (e) => {
 window.onload = () => {
     renderizarGrafica("2026-03-25");
 };
+
+document.addEventListener("DOMContentLoaded", async () => {
+    // 1. Obtener el ID del paciente desde la URL
+    // Ejemplo: detalle.html?id=25
+    const urlParams = new URLSearchParams(window.location.search);
+    const patientId = urlParams.get('id');
+
+    if (!patientId) {
+        console.error("No se encontró ID de paciente en la URL");
+        return;
+    }
+
+    // 2. Cargar los datos del paciente al iniciar
+    await loadPatientData(patientId);
+
+    // 3. Configurar el evento del botón Guardar Observaciones
+    const saveBtn = document.getElementById('btn-save');
+    saveBtn.addEventListener('click', () => {
+        saveObservations(patientId);
+    });
+});
+
+/**
+ * Función para obtener datos del backend
+ */
+async function loadPatientData(id) {
+    try {
+        // Sustituye esta URL por la ruta real de tu API/Backend
+        const response = await fetch(`api/get_patient.php?id=${id}`);
+        
+        if (!response.ok) throw new Error("Error en la respuesta de la red");
+        
+        const data = await response.json();
+
+        // Inyectar los datos en el HTML usando los IDs que creamos
+        document.getElementById('patient-name').textContent = data.nombre.toUpperCase();
+        document.getElementById('patient-age').textContent = data.edad;
+        document.getElementById('patient-city').textContent = data.localidad;
+        document.getElementById('patient-phone').textContent = data.telefono;
+        document.getElementById('patient-parents').textContent = `${data.padre} / ${data.madre}`;
+        document.getElementById('patient-level').textContent = `Nivel: ${data.nivel}`;
+        document.getElementById('patient-obs').value = data.observaciones || "";
+        
+        // Si el género determina la foto
+        const imgPath = data.genero === 'femenino' ? 'media/imgs/nina.png' : 'media/imgs/nino.png';
+        document.getElementById('patient-img').src = imgPath;
+
+        // Aquí podrías llamar a una función de tus gráficos pasando los datos
+        // initCharts(data.puntuaciones);
+
+    } catch (error) {
+        console.error("No se pudo cargar la info:", error);
+        alert("Error al conectar con la base de datos.");
+    }
+}
+
+/**
+ * Función para enviar las observaciones al servidor
+ */
+async function saveObservations(id) {
+    const obsText = document.getElementById('patient-obs').value;
+
+    try {
+        const response = await fetch(`api/update_obs.php`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                id: id,
+                observaciones: obsText
+            })
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            alert("Observaciones guardadas correctamente.");
+        } else {
+            alert("Error al guardar: " + result.message);
+        }
+    } catch (error) {
+        console.error("Error en la petición:", error);
+        alert("Error de conexión al guardar.");
+    }
+}
+
+document.addEventListener("DOMContentLoaded", async () => {
+    // 1. Obtener ID de la URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const patientId = urlParams.get('id') || 1; 
+
+    try {
+        // Simulacro de datos recibidos del backend
+        const data = {
+            nombre: "Alonso Muñoz",
+            edad: 6,
+            localidad: "Daimiel",
+            telefono: "652-789-980",
+            padre: "Manolo Escobar",
+            madre: "María Sánchez",
+            nivel: "Experto",
+            observaciones: "El paciente muestra una mejoría notable en los ejercicios de coordinación motriz.",
+            foto: "/media/imgs/nino.png"
+        };
+
+        // Inyectar datos en el DOM
+        document.getElementById('patient-name').textContent = data.nombre.toUpperCase();
+        document.getElementById('patient-age').textContent = data.edad;
+        document.getElementById('patient-city').textContent = data.localidad;
+        document.getElementById('patient-phone').textContent = data.telefono;
+        document.getElementById('patient-parents').textContent = `${data.padre} / ${data.madre}`;
+        document.getElementById('patient-level').textContent = `Nivel: ${data.nivel}`;
+        document.getElementById('patient-obs').value = data.observaciones;
+        document.getElementById('patient-img').src = data.foto;
+
+    } catch (error) {
+        console.error("Error al cargar los datos del paciente:", error);
+        document.getElementById('patient-name').textContent = "Error al cargar";
+    }
+
+    // Evento del botón +
+    document.getElementById('btnAddPatient')?.addEventListener('click', () => {
+        window.location.href = "/register.html"; // O la ruta de creación
+    });
+
+    // Evento Guardar Observaciones
+    document.getElementById('btn-save')?.addEventListener('click', () => {
+        const obs = document.getElementById('patient-obs').value;
+        alert("Observaciones guardadas correctamente.");
+        console.log("Guardando para ID " + patientId + ": " + obs);
+    });
+});
