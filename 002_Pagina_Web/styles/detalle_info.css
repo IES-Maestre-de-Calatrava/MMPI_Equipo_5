@@ -1,0 +1,101 @@
+.calendar-panel {
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 20px;
+    min-height: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.calendar-label {
+    font-weight: 800;
+    color: #000839;
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+}
+
+.calendar-input {
+    border-radius: 12px !important;
+    border: 1px solid #d7d7d7;
+    padding: 11px 12px;
+    cursor: pointer;
+    background: white !important;
+    caret-color: transparent;
+}
+
+.calendar-input:focus {
+    border-color: #000839;
+    box-shadow: 0 0 0 0.15rem rgba(0, 8, 57, 0.18);
+}
+
+.btn-report-custom {
+    min-width: 230px;
+}
+
+.chart-container {
+    min-height: 250px;
+}
+
+.flatpickr-calendar {
+    font-family: "Inter", sans-serif !important;
+    border-radius: 14px !important;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.18) !important;
+    overflow: hidden;
+}
+
+.flatpickr-months,
+.flatpickr-weekdays {
+    background: #000839 !important;
+}
+
+.flatpickr-current-month,
+.flatpickr-current-month .cur-month,
+.flatpickr-current-month input.cur-year,
+.flatpickr-weekday {
+    color: white !important;
+    font-weight: 800 !important;
+}
+
+.flatpickr-prev-month,
+.flatpickr-next-month {
+    fill: white !important;
+    color: white !important;
+}
+
+.flatpickr-day {
+    border-radius: 8px !important;
+}
+
+.flatpickr-day.dia-con-datos {
+    background: #000839 !important;
+    color: white !important;
+    border: 2px solid #000839 !important;
+    font-weight: bold !important;
+}
+
+.flatpickr-day.semana-con-datos {
+    background: #d7f3df !important;
+    color: #000839 !important;
+    border: 2px solid #198754 !important;
+    font-weight: bold !important;
+}
+
+.flatpickr-day.selected,
+.flatpickr-day.startRange,
+.flatpickr-day.endRange,
+.flatpickr-day.inRange {
+    background: #000839 !important;
+    color: white !important;
+    border-color: #000839 !important;
+}
+
+@media (max-width: 768px) {
+    .calendar-panel {
+        min-height: auto;
+    }
+
+    .btn-report-custom {
+        min-width: 100%;
+    }
+}

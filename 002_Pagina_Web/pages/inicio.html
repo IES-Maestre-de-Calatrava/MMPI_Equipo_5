@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vista de Pacientes - MMPI</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <link rel="stylesheet" href="../styles/inicio.css?v=22">
+    <link rel="icon" type="image/x-icon" href="../media/imgs_important/favicon.ico">
+</head>
+
+<body>
+
+    <div class="container-fluid p-4">
+
+        <header class="d-flex align-items-center justify-content-between mb-4 header-container">
+
+            <div class="logo-box">
+                <img src="../media/imgs_important/final.png" alt="Logo MMPI" class="main-logo">
+            </div>
+
+            <div class="search-bar-container d-flex align-items-center flex-grow-1 mx-4">
+                <div class="team-name"><span id="nombreUsuarioHeader">Usuario</span></div>
+
+                <div class="header-actions-wrapper d-flex align-items-center ms-3">
+                    <button id="btnAddPatient" class="btn-plus-minimal" title="Registrar nuevo paciente">
+                        <i class="bi bi-plus"></i>
+                    </button>
+
+                    <div class="search-input-group ms-3">
+                        <button class="btn btn-search">
+                            <i class="bi bi-search"></i> Búsqueda
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-icons d-flex gap-2">
+                <button class="icon-btn btn-notif">
+                    <i class="bi bi-bell-fill"></i>
+                    <span class="dot"></span>
+                </button>
+
+            <a href="../index.html" id="btnLogout" class="icon-btn btn-power">
+                <i class="bi bi-power"></i>
+            </a>
+            </div>
+
+        </header>
+
+        <main class="main-content-card shadow-sm">
+            <h2 class="section-title">Vista de Pacientes</h2>
+
+            <div class="row g-4 mt-2" id="patient-container">
+                <div class="text-center p-5" id="loading">
+                    <div class="spinner-border text-primary" role="status"></div>
+                    <p class="mt-2">Cargando pacientes...</p>
+                </div>
+            </div>
+        </main>
+
+    </div>
+
+    <script src="../js/inicio.js?v=22"></script>
+</body>
+</html>
