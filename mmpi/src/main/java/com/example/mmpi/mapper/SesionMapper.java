@@ -1,75 +1,69 @@
 package com.example.mmpi.mapper;
 
 import com.example.mmpi.dto.SesionDTO;
-import com.example.mmpi.persistence.Fisioterapeuta;
-import com.example.mmpi.persistence.Paciente;
-import com.example.mmpi.persistence.Sesion;
+import com.example.mmpi.persistence.*;
 
 public class SesionMapper {
 
-    public static SesionDTO toDTO(Sesion sesion) {
+    public static SesionDTO toDTO(Sesion s) {
 
         SesionDTO dto = new SesionDTO();
 
-        dto.setIdSesion(sesion.getIdSesion());
-        dto.setAceleracionesBruscas(sesion.getAceleracionesBruscas());
-        dto.setColisiones(sesion.getColisiones());
-        dto.setEstabilidad(sesion.getEstabilidad());
-        dto.setNivel(sesion.getNivel());
-        dto.setParadasBruscas(sesion.getParadasBruscas());
-        dto.setScore(sesion.getScore());
-        dto.setTiempoMovimiento(sesion.getTiempoMovimiento());
-        dto.setTiempoSesion(sesion.getTiempoSesion());
+        dto.setIdSesion(s.getIdSesion());
+        dto.setAceleracionesBruscas(s.getAceleracionesBruscas());
+        dto.setColisiones(s.getColisiones());
+        dto.setEstabilidad(s.getEstabilidad());
+        dto.setNivel(s.getNivel());
+        dto.setParadasBruscas(s.getParadasBruscas());
+        dto.setScore(s.getScore());
+        dto.setTiempoMovimiento(s.getTiempoMovimiento());
 
-        if (sesion.getFisioterapeuta() != null) {
-        	
-            dto.setDniFisio(sesion.getFisioterapeuta().getDniFisio());
-        
-        }
+        dto.setTiempoSesion(s.getTiempoSesion());
 
-        if (sesion.getPaciente() != null) {
-        
-        	dto.setDniPaciente(sesion.getPaciente().getDniPaciente());
-        
-        }
+        dto.setAnioSesion(s.getAnioSesion());
+        dto.setMesSesion(s.getMesSesion());
+        dto.setDiaSesion(s.getDiaSesion());
 
-        
+        if (s.getFisioterapeuta() != null)
+            dto.setDniFisio(s.getFisioterapeuta().getDniFisio());
+
+        if (s.getPaciente() != null)
+            dto.setDniPaciente(s.getPaciente().getDniPaciente());
+
         return dto;
-    
     }
 
     public static Sesion toEntity(SesionDTO dto) {
 
-        Sesion sesion = new Sesion();
+        Sesion s = new Sesion();
 
-        sesion.setIdSesion(dto.getIdSesion());
-        sesion.setAceleracionesBruscas(dto.getAceleracionesBruscas());
-        sesion.setColisiones(dto.getColisiones());
-        sesion.setEstabilidad(dto.getEstabilidad());
-        sesion.setNivel(dto.getNivel());
-        sesion.setParadasBruscas(dto.getParadasBruscas());
-        sesion.setScore(dto.getScore());
-        sesion.setTiempoMovimiento(dto.getTiempoMovimiento());
-        sesion.setTiempoSesion(dto.getTiempoSesion());
+        s.setIdSesion(dto.getIdSesion());
+        s.setAceleracionesBruscas(dto.getAceleracionesBruscas());
+        s.setColisiones(dto.getColisiones());
+        s.setEstabilidad(dto.getEstabilidad());
+        s.setNivel(dto.getNivel());
+        s.setParadasBruscas(dto.getParadasBruscas());
+        s.setScore(dto.getScore());
+        s.setTiempoMovimiento(dto.getTiempoMovimiento());
+
+        s.setTiempoSesion(dto.getTiempoSesion());
+
+        s.setAnioSesion(dto.getAnioSesion());
+        s.setMesSesion(dto.getMesSesion());
+        s.setDiaSesion(dto.getDiaSesion());
 
         if (dto.getDniFisio() != null) {
-    
-        	Fisioterapeuta fisio = new Fisioterapeuta();
-            fisio.setDniFisio(dto.getDniFisio());
-            sesion.setFisioterapeuta(fisio);
-        
+            Fisioterapeuta f = new Fisioterapeuta();
+            f.setDniFisio(dto.getDniFisio());
+            s.setFisioterapeuta(f);
         }
 
         if (dto.getDniPaciente() != null) {
-        
-        	Paciente paciente = new Paciente();
-            paciente.setDniPaciente(dto.getDniPaciente());
-            sesion.setPaciente(paciente);
-        
+            Paciente p = new Paciente();
+            p.setDniPaciente(dto.getDniPaciente());
+            s.setPaciente(p);
         }
-        
-        return sesion;
-    
-    }
 
+        return s;
+    }
 }

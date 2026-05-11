@@ -5,8 +5,8 @@ const API_BASES_DETALLE = [
 ];
 
 let sesionesPacienteGlobal = [];
-let graficaPie = null;
-let graficaBarras = null;
+let graficaDonut = null;
+let graficaLineas = null;
 
 document.addEventListener("DOMContentLoaded", async function () {
 
@@ -284,7 +284,7 @@ function actualizarGraficasPorDia(fecha) {
         return obtenerFechaSesionDetalle(sesion) === fecha;
     });
 
-    pintarGraficas(sesionesDia, "Día " + fecha);
+    pintarGraficas(sesionesDia, "Día " + fecha, "dia");
 
 }
 
@@ -295,8 +295,9 @@ function actualizarGraficasPorSemana(rango) {
         return fecha >= rango.inicio && fecha <= rango.fin;
     });
 
-    pintarGraficas(sesionesSemana, rango.inicio + " a " + rango.fin);
+    const dias = agruparPorDia(sesionesSemana);
 
+    pintarGraficas(dias, "SEMANA " + rango.inicio + " → " + rango.fin, "semana");
 }
 
 function actualizarGraficasVacias() {
@@ -305,40 +306,60 @@ function actualizarGraficasVacias() {
 
 }
 
-function pintarGraficas(sesiones, titulo) {
+function pintarGraficas(data, titulo, modo = "dia") {
 
-    const resumen = calcularResumenDetalle(sesiones);
+    if (modo === "semana") {
 
-    pintarGraficaPie(resumen, titulo);
-    pintarGraficaBarras(resumen, titulo);
+        pintarGraficaDonutSemana(data, titulo);
+        pintarGraficaLineasSemana(data, titulo);
+        pintarGraficaCombinadaSemana(data, titulo);
 
-}
-
-function pintarGraficaPie(resumen, titulo) {
-
-    const canvas = document.getElementById("pieChart");
-
-    if (!canvas) {
         return;
     }
 
-    const ctx = canvas.getContext("2d");
+    // DAILY MODE (old behavior)
+    const resumen = calcularResumenDetalle(data);
 
-    if (graficaPie) {
-        graficaPie.destroy();
+    // Extract date from first session if available
+    let fechaInicio = null;
+    let fechaFin = null;
+    if (data.length > 0) {
+        fechaInicio = obtenerFechaSesionDetalle(data[0]);
+        fechaFin = obtenerFechaSesionDetalle(data[data.length - 1]);
     }
 
-    graficaPie = new Chart(ctx, {
-        type: "doughnut",
+    pintarGraficaDonut(resumen, titulo, fechaInicio, fechaFin);
+    pintarGraficaLineas(data, titulo);
+    pintarGraficaCombinada(data, titulo);
+}
+
+function pintarGraficasSemana(dias, titulo) {
+
+    const labels = dias.map(d => d.fecha);
+
+    const scores = dias.map(d => d.score);
+    const estabilidad = dias.map(d => d.estabilidad);
+    const eventos = dias.map(d =>
+        d.colisiones + d.aceleracionesBruscas + d.paradasBruscas
+    );
+
+    const canvas = document.getElementById("lineChart");
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d");
+
+    if (graficaLineas) graficaLineas.destroy();
+
+    graficaLineas = new Chart(ctx, {
+        type: "line",
         data: {
-            labels: ["Colisiones", "Aceleraciones bruscas", "Paradas bruscas"],
+            labels,
             datasets: [{
-                data: [
-                    resumen.colisiones,
-                    resumen.aceleracionesBruscas,
-                    resumen.paradasBruscas
-                ],
-                backgroundColor: ["#dc3545", "#ffc107", "#0d6efd"]
+                label: "Score diario (sumado)",
+                data: scores,
+                borderColor: "#000839",
+                fill: true,
+                tension: 0.4
             }]
         },
         options: {
@@ -347,73 +368,756 @@ function pintarGraficaPie(resumen, titulo) {
             plugins: {
                 title: {
                     display: true,
-                    text: titulo
-                },
-                legend: {
-                    position: "bottom"
+                    text: "SEMANA: " + titulo
                 }
             }
         }
+    });
+}
+
+function pintarGraficaDonut(resumen, titulo, fechaInicio = null, fechaFin = null) {
+
+    const canvas = document.getElementById("donutChart");
+
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d");
+
+    if (graficaDonut) {
+        graficaDonut.destroy();
+    }
+
+    let tituloFinal = titulo;
+    if (fechaInicio && fechaFin) {
+        if (fechaInicio === fechaFin) {
+            tituloFinal = "Eventos por día " + fechaInicio;
+        } else {
+            tituloFinal = "Eventos por semana " + fechaInicio + " hasta " + fechaFin;
+        }
+    }
+
+    graficaDonut = new Chart(ctx, {
+
+        type: "doughnut",
+
+        data: {
+
+            labels: ["Colisiones", "Aceleraciones", "Paradas"],
+
+            datasets: [{
+
+                data: [
+                    resumen.colisiones,
+                    resumen.aceleracionesBruscas,
+                    resumen.paradasBruscas
+                ],
+
+                backgroundColor: [
+                    "rgba(220, 53, 69, 0.75)",
+                    "rgba(255, 193, 7, 0.75)",
+                    "rgba(13, 110, 253, 0.75)"
+                ],
+
+                borderColor: [
+                    "#dc3545",
+                    "#ffc107",
+                    "#0d6efd"
+                ],
+
+                borderWidth: 2,
+                hoverOffset: 18,
+                cutout: "40%"
+            }]
+
+        },
+
+        options: {
+
+            responsive: true,
+            maintainAspectRatio: false,
+
+            animation: {
+                animateRotate: true,
+                animateScale: true,
+                duration: 900
+            },
+
+            plugins: {
+
+                title: {
+                    display: true,
+                    text: tituloFinal,
+                    color: "#000839",
+                    font: {
+                        size: 16,
+                        weight: "bold"
+                    }
+                },
+
+                legend: {
+                    position: "bottom",
+                    labels: {
+                        usePointStyle: true,
+                        pointStyle: "circle",
+                        padding: 15,
+                        color: "#000839",
+                        font: {
+                            weight: "600",
+                            size: 12
+                        }
+                    }
+                },
+
+                tooltip: {
+                    backgroundColor: "#000839",
+                    titleColor: "#fff",
+                    bodyColor: "#fff",
+                    padding: 12,
+                    cornerRadius: 10
+                }
+
+            }
+
+        }
+
     });
 
 }
 
-function pintarGraficaBarras(resumen, titulo) {
+function pintarGraficaDonutSemana(dias, titulo) {
 
-    const canvas = document.getElementById("barChart");
+    const resumen = dias.reduce((acc, d) => {
 
-    if (!canvas) {
-        return;
+        acc.colisiones += d.colisiones;
+        acc.aceleracionesBruscas += d.aceleracionesBruscas;
+        acc.paradasBruscas += d.paradasBruscas;
+
+        return acc;
+
+    }, {
+        colisiones: 0,
+        aceleracionesBruscas: 0,
+        paradasBruscas: 0
+    });
+
+    // Extract week dates
+    let fechaInicio = null;
+    let fechaFin = null;
+    if (dias.length > 0) {
+        fechaInicio = dias[0].fecha;
+        fechaFin = dias[dias.length - 1].fecha;
     }
+
+    pintarGraficaDonut(resumen, titulo, fechaInicio, fechaFin);
+}
+
+function pintarGraficaLineas(sesiones, titulo) {
+
+    const canvas = document.getElementById("lineChart");
+    if (!canvas) return;
 
     const ctx = canvas.getContext("2d");
 
-    if (graficaBarras) {
-        graficaBarras.destroy();
+    if (graficaLineas) {
+        graficaLineas.destroy();
     }
 
-    graficaBarras = new Chart(ctx, {
-        type: "bar",
+    sesiones.sort((a, b) =>
+        String(a.idSesion || a.id || "").localeCompare(String(b.idSesion || b.id || ""))
+    );
+
+    const labels = sesiones.map((_, index) => "Sesión #" + (index + 1));
+
+    // Calculate cumulative usage time in hours
+    let cumulativeTime = 0;
+    const tiempoUso = sesiones.map((sesion, idx) => {
+        // The field is tiempoMovimiento (in minutes)
+        let duracion = numeroDetalle(obtenerCampo(sesion, [
+            "tiempoMovimiento",
+            "tiempo_movimiento",
+            "duracion", 
+            "duration", 
+            "tiempoSesion",
+            "tiempo_sesion"
+        ], 0));
+        
+        // Convert from minutes to hours
+        const horas = duracion / 60;
+        cumulativeTime += horas;
+        
+        return Math.round(cumulativeTime * 100) / 100; // Round to 2 decimals for precision
+    });
+
+    // 🌊 deep glow gradient
+    const gradient = ctx.createLinearGradient(0, 0, 0, 350);
+    gradient.addColorStop(0, "rgba(0, 8, 57, 0.45)");
+    gradient.addColorStop(1, "rgba(0, 8, 57, 0.00)");
+
+    graficaLineas = new Chart(ctx, {
+        type: "line",
         data: {
-            labels: ["Resumen"],
+            labels,
             datasets: [
                 {
-                    label: "Score medio",
-                    data: [resumen.scoreMedioNumero],
-                    backgroundColor: "#000839"
-                },
-                {
-                    label: "Estabilidad media",
-                    data: [resumen.estabilidadMediaNumero],
-                    backgroundColor: "#198754"
-                },
-                {
-                    label: "Colisiones",
-                    data: [resumen.colisiones],
-                    backgroundColor: "#dc3545"
+                    label: "Tiempo de uso acumulado (horas)",
+                    data: tiempoUso,
+
+                    borderColor: "#000839",
+                    backgroundColor: gradient,
+
+                    fill: true,
+                    tension: 0.5,
+
+                    // ✨ modern points
+                    pointRadius: 3,
+                    pointHoverRadius: 8,
+                    pointBackgroundColor: "#ffffff",
+                    pointBorderColor: "#000839",
+                    pointBorderWidth: 2,
+
+                    pointHoverBackgroundColor: "#000839",
+                    pointHoverBorderWidth: 3
                 }
             ]
         },
+
         options: {
             responsive: true,
             maintainAspectRatio: false,
+
+            interaction: {
+                mode: "index",
+                intersect: false
+            },
+
             plugins: {
+
                 title: {
                     display: true,
-                    text: titulo
+                    text: "Tiempo de uso - " + titulo,
+                    color: "#000839",
+                    font: {
+                        size: 18,
+                        weight: "700"
+                    },
+                    padding: {
+                        bottom: 15
+                    }
                 },
+
                 legend: {
-                    position: "bottom"
+                    position: "bottom",
+                    labels: {
+                        color: "#000839",
+                        font: {
+                            weight: "600",
+                            size: 12
+                        },
+                        usePointStyle: true,
+                        pointStyle: "circle",
+                        padding: 18
+                    }
+                },
+
+                tooltip: {
+                    backgroundColor: "rgba(0, 8, 57, 0.95)",
+                    titleColor: "#ffffff",
+                    bodyColor: "#ffffff",
+                    padding: 14,
+                    cornerRadius: 12,
+                    displayColors: false,
+                    titleFont: { weight: "700" },
+                    callbacks: {
+                        label: function(context) {
+                            return context.dataset.label + ": " + context.parsed.y + " h";
+                        }
+                    }
                 }
             },
+
             scales: {
+
+                x: {
+                    grid: {
+                        display: false
+                    },
+                    ticks: {
+                        color: "#8a8f98",
+                        font: {
+                            weight: "500"
+                        }
+                    }
+                },
+
                 y: {
-                    beginAtZero: true
+                    beginAtZero: true,
+                    grid: {
+                        color: "rgba(0,0,0,0.04)"
+                    },
+                    ticks: {
+                        color: "#8a8f98",
+                        font: {
+                            weight: "500"
+                        }
+                    }
+                }
+            },
+
+            elements: {
+                line: {
+                    borderWidth: 3
                 }
             }
         }
     });
+}
 
+function pintarGraficaLineasSemana(dias, titulo) {
+
+    const canvas = document.getElementById("lineChart");
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d");
+
+    if (graficaLineas) graficaLineas.destroy();
+
+    const labels = dias.map(d => d.fecha);
+    const tiempoUso = dias.map(d => d.tiempoUsoTotal || 0);
+
+    const gradient = ctx.createLinearGradient(0, 0, 0, 350);
+    gradient.addColorStop(0, "rgba(0, 8, 57, 0.45)");
+    gradient.addColorStop(1, "rgba(0, 8, 57, 0.00)");
+
+    graficaLineas = new Chart(ctx, {
+        type: "line",
+        data: {
+            labels,
+            datasets: [
+                {
+                    label: "Tiempo de uso (horas)",
+                    data: tiempoUso,
+
+                    borderColor: "#000839",
+                    backgroundColor: gradient,
+
+                    fill: true,
+                    tension: 0.5,
+
+                    pointRadius: 3,
+                    pointHoverRadius: 8,
+                    pointBackgroundColor: "#ffffff",
+                    pointBorderColor: "#000839",
+                    pointBorderWidth: 2,
+
+                    pointHoverBackgroundColor: "#000839",
+                    pointHoverBorderWidth: 3
+                }
+            ]
+        },
+
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+
+            interaction: {
+                mode: "index",
+                intersect: false
+            },
+
+            plugins: {
+
+                title: {
+                    display: true,
+                    text: "Tiempo de uso - " + titulo,
+                    color: "#000839",
+                    font: {
+                        size: 18,
+                        weight: "700"
+                    },
+                    padding: {
+                        bottom: 15
+                    }
+                },
+
+                legend: {
+                    position: "bottom",
+                    labels: {
+                        color: "#000839",
+                        font: {
+                            weight: "600",
+                            size: 12
+                        },
+                        usePointStyle: true,
+                        pointStyle: "circle",
+                        padding: 18
+                    }
+                },
+
+                tooltip: {
+                    backgroundColor: "rgba(0, 8, 57, 0.95)",
+                    titleColor: "#ffffff",
+                    bodyColor: "#ffffff",
+                    padding: 14,
+                    cornerRadius: 12,
+                    displayColors: false
+                }
+            },
+
+            scales: {
+
+                x: {
+                    grid: { display: false },
+                    ticks: {
+                        color: "#8a8f98",
+                        font: { weight: "500" }
+                    }
+                },
+
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        color: "rgba(0,0,0,0.04)"
+                    },
+                    ticks: {
+                        color: "#8a8f98",
+                        font: { weight: "500" }
+                    }
+                }
+            },
+
+            elements: {
+                line: {
+                    borderWidth: 3
+                }
+            }
+        }
+    });
+}
+
+function pintarGraficaCombinada(sesiones, titulo) {
+
+    const canvas = document.getElementById("combinedChart");
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d");
+
+    if (window.graficaCombinada) {
+        window.graficaCombinada.destroy();
+    }
+
+    sesiones.sort((a, b) =>
+        String(a.idSesion || a.id || "").localeCompare(String(b.idSesion || b.id || ""))
+    );
+
+    const labels = sesiones.map((_, index) => "Sesión #" + (index + 1));
+
+    const scores = sesiones.map(s =>
+        numeroDetalle(obtenerCampo(s, ["score"], 0))
+    );
+
+    const estabilidad = sesiones.map(s =>
+        numeroDetalle(obtenerCampo(s, ["estabilidad"], 0))
+    );
+
+    const eventos = sesiones.map(s => {
+        const colisiones = numeroDetalle(obtenerCampo(s, ["colisiones"], 0));
+        const aceleraciones = numeroDetalle(
+            obtenerCampo(s, ["aceleracionesBruscas", "aceleraciones_bruscas"], 0)
+        );
+        const paradas = numeroDetalle(
+            obtenerCampo(s, ["paradasBruscas", "paradas_bruscas"], 0)
+        );
+
+        return colisiones + aceleraciones + paradas;
+    });
+
+    // 🌊 Gradients
+    const scoreGradient = ctx.createLinearGradient(0, 0, 0, 300);
+    scoreGradient.addColorStop(0, "rgba(0, 8, 57, 0.35)");
+    scoreGradient.addColorStop(1, "rgba(0, 8, 57, 0.00)");
+
+    const eventGradient = ctx.createLinearGradient(0, 0, 0, 300);
+    eventGradient.addColorStop(0, "rgba(220, 53, 69, 0.30)");
+    eventGradient.addColorStop(1, "rgba(220, 53, 69, 0.00)");
+
+    const stabilityGradient = ctx.createLinearGradient(0, 0, 0, 300);
+    stabilityGradient.addColorStop(0, "rgba(25, 135, 84, 0.30)");
+    stabilityGradient.addColorStop(1, "rgba(25, 135, 84, 0.00)");
+
+    window.graficaCombinada = new Chart(ctx, {
+        type: "line",
+        data: {
+            labels,
+            datasets: [
+
+                // 🧠 SCORE (primary)
+                {
+                    label: "Score",
+                    data: scores,
+                    borderColor: "#000839",
+                    backgroundColor: scoreGradient,
+                    borderWidth: 3,
+                    tension: 0.45,
+                    fill: true,
+                    pointRadius: 3,
+                    pointHoverRadius: 7,
+                    pointBackgroundColor: "#fff",
+                    pointBorderColor: "#000839",
+                    pointBorderWidth: 2,
+                    pointHoverBackgroundColor: "#000839"
+                },
+
+                // 🚨 EVENTS (negative metric)
+                {
+                    label: "Eventos Totales",
+                    data: eventos,
+                    borderColor: "#dc3545",
+                    backgroundColor: eventGradient,
+                    borderWidth: 3,
+                    tension: 0.45,
+                    fill: true,
+                    pointRadius: 3,
+                    pointHoverRadius: 7,
+                    pointBackgroundColor: "#fff",
+                    pointBorderColor: "#dc3545",
+                    pointBorderWidth: 2,
+                    pointHoverBackgroundColor: "#dc3545"
+                },
+
+                // ⚖️ STABILITY (new positive control metric)
+                {
+                    label: "Estabilidad",
+                    data: estabilidad,
+                    borderColor: "#198754",
+                    backgroundColor: stabilityGradient,
+                    borderWidth: 3,
+                    tension: 0.45,
+                    fill: true,
+                    pointRadius: 3,
+                    pointHoverRadius: 7,
+                    pointBackgroundColor: "#fff",
+                    pointBorderColor: "#198754",
+                    pointBorderWidth: 2,
+                    pointHoverBackgroundColor: "#198754"
+                }
+            ]
+        },
+
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+
+            interaction: {
+                mode: "index",
+                intersect: false
+            },
+
+            plugins: {
+
+                title: {
+                    display: true,
+                    text: "Score vs Eventos vs Estabilidad - " + titulo,
+                    color: "#000839",
+                    font: {
+                        size: 16,
+                        weight: "bold"
+                    }
+                },
+
+                legend: {
+                    position: "bottom",
+                    labels: {
+                        usePointStyle: true,
+                        pointStyle: "circle",
+                        padding: 15,
+                        color: "#000839",
+                        font: {
+                            weight: "600",
+                            size: 12
+                        }
+                    }
+                },
+
+                tooltip: {
+                    backgroundColor: "rgba(0, 8, 57, 0.92)",
+                    titleColor: "#fff",
+                    bodyColor: "#fff",
+                    padding: 12,
+                    cornerRadius: 10,
+                    displayColors: true
+                }
+            },
+
+            scales: {
+
+                x: {
+                    grid: { display: false },
+                    ticks: { color: "#6c757d" }
+                },
+
+                y: {
+                    beginAtZero: true,
+                    grid: { color: "rgba(0,0,0,0.06)" },
+                    ticks: { color: "#6c757d" }
+                }
+            }
+        }
+    });
+}
+
+function pintarGraficaCombinadaSemana(dias, titulo) {
+
+    const canvas = document.getElementById("combinedChart");
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d");
+
+    if (window.graficaCombinada) window.graficaCombinada.destroy();
+
+    const labels = dias.map(d => d.fecha);
+    const scores = dias.map(d => d.score);
+    const estabilidad = dias.map(d => d.estabilidad);
+
+    const eventos = dias.map(d =>
+        d.colisiones + d.aceleracionesBruscas + d.paradasBruscas
+    );
+
+    // 🌊 gradients (IMPORTANT: per dataset)
+    const scoreGradient = ctx.createLinearGradient(0, 0, 0, 350);
+    scoreGradient.addColorStop(0, "rgba(0, 8, 57, 0.35)");
+    scoreGradient.addColorStop(1, "rgba(0, 8, 57, 0.00)");
+
+    const eventGradient = ctx.createLinearGradient(0, 0, 0, 350);
+    eventGradient.addColorStop(0, "rgba(220, 53, 69, 0.25)");
+    eventGradient.addColorStop(1, "rgba(220, 53, 69, 0.00)");
+
+    const stabilityGradient = ctx.createLinearGradient(0, 0, 0, 350);
+    stabilityGradient.addColorStop(0, "rgba(25, 135, 84, 0.25)");
+    stabilityGradient.addColorStop(1, "rgba(25, 135, 84, 0.00)");
+
+    window.graficaCombinada = new Chart(ctx, {
+        type: "line",
+        data: {
+            labels,
+            datasets: [
+
+                {
+                    label: "Score",
+                    data: scores,
+                    borderColor: "#000839",
+                    backgroundColor: scoreGradient,
+                    fill: true,
+                    tension: 0.5,
+                    borderWidth: 3,
+                    pointRadius: 3,
+                    pointHoverRadius: 7,
+                    pointBackgroundColor: "#fff",
+                    pointBorderColor: "#000839",
+                    pointBorderWidth: 2,
+                    pointHoverBackgroundColor: "#000839"
+                },
+
+                {
+                    label: "Eventos",
+                    data: eventos,
+                    borderColor: "#dc3545",
+                    backgroundColor: eventGradient,
+                    fill: true,
+                    tension: 0.5,
+                    borderWidth: 3,
+                    pointRadius: 3,
+                    pointHoverRadius: 7,
+                    pointBackgroundColor: "#fff",
+                    pointBorderColor: "#dc3545",
+                    pointBorderWidth: 2,
+                    pointHoverBackgroundColor: "#dc3545"
+                },
+
+                {
+                    label: "Estabilidad",
+                    data: estabilidad,
+                    borderColor: "#198754",
+                    backgroundColor: stabilityGradient,
+                    fill: true,
+                    tension: 0.5,
+                    borderWidth: 3,
+                    pointRadius: 3,
+                    pointHoverRadius: 7,
+                    pointBackgroundColor: "#fff",
+                    pointBorderColor: "#198754",
+                    pointBorderWidth: 2,
+                    pointHoverBackgroundColor: "#198754"
+                }
+            ]
+        },
+
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+
+            interaction: {
+                mode: "index",
+                intersect: false
+            },
+
+            plugins: {
+
+                title: {
+                    display: true,
+                    text: "Score vs Eventos vs Estabilidad - " + titulo,
+                    color: "#000839",
+                    font: {
+                        size: 18,
+                        weight: "700"
+                    },
+                    padding: { bottom: 15 }
+                },
+
+                legend: {
+                    position: "bottom",
+                    labels: {
+                        usePointStyle: true,
+                        pointStyle: "circle",
+                        padding: 18,
+                        color: "#000839",
+                        font: {
+                            weight: "600",
+                            size: 12
+                        }
+                    }
+                },
+
+                tooltip: {
+                    backgroundColor: "rgba(0, 8, 57, 0.95)",
+                    titleColor: "#fff",
+                    bodyColor: "#fff",
+                    padding: 14,
+                    cornerRadius: 12,
+                    displayColors: true
+                }
+            },
+
+            scales: {
+
+                x: {
+                    grid: { display: false },
+                    ticks: {
+                        color: "#8a8f98",
+                        font: { weight: "500" }
+                    }
+                },
+
+                y: {
+                    beginAtZero: true,
+                    grid: { color: "rgba(0,0,0,0.04)" },
+                    ticks: {
+                        color: "#8a8f98",
+                        font: { weight: "500" }
+                    }
+                }
+            }
+        }
+    });
 }
 
 function calcularResumenDetalle(sesiones) {
@@ -452,6 +1156,55 @@ function calcularResumenDetalle(sesiones) {
 /* ==================================================
    FUNCIONES AUXILIARES
 ================================================== */
+
+function agruparPorDia(sesiones) {
+
+    const mapa = {};
+
+    sesiones.forEach(s => {
+
+        const fecha = obtenerFechaSesionDetalle(s);
+
+        if (!mapa[fecha]) {
+            mapa[fecha] = {
+                fecha: fecha,
+                score: 0,
+                estabilidad: 0,
+                colisiones: 0,
+                aceleracionesBruscas: 0,
+                paradasBruscas: 0,
+                tiempoUsoTotal: 0,
+                totalSesiones: 0
+            };
+        }
+
+        mapa[fecha].score += numeroDetalle(obtenerCampo(s, ["score"], 0));
+        mapa[fecha].estabilidad += numeroDetalle(obtenerCampo(s, ["estabilidad"], 0));
+
+        mapa[fecha].colisiones += numeroDetalle(obtenerCampo(s, ["colisiones"], 0));
+        mapa[fecha].aceleracionesBruscas += numeroDetalle(obtenerCampo(s, ["aceleracionesBruscas", "aceleraciones_bruscas"], 0));
+        mapa[fecha].paradasBruscas += numeroDetalle(obtenerCampo(s, ["paradasBruscas", "paradas_bruscas"], 0));
+
+        // Add tiempo de uso (convert from minutes to hours)
+        let duracion = numeroDetalle(obtenerCampo(s, [
+            "tiempoMovimiento",
+            "tiempo_movimiento",
+            "duracion", 
+            "duration", 
+            "tiempoSesion",
+            "tiempo_sesion"
+        ], 0));
+        
+        if (duracion > 0) {
+            const horas = duracion / 60; // Convert from minutes to hours
+            mapa[fecha].tiempoUsoTotal += horas;
+        }
+
+        mapa[fecha].totalSesiones += 1;
+    });
+
+    return Object.values(mapa);
+}
 
 function pintarUsuarioHeader() {
 

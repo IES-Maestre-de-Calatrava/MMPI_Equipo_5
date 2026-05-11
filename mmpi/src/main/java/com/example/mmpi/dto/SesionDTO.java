@@ -1,14 +1,13 @@
 package com.example.mmpi.dto;
 
 import java.time.LocalDateTime;
-
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 public class SesionDTO {
 
     @NotBlank
-    @Size(max = 5)
+    @Size(max = 20)
     private String idSesion;
 
     private Integer aceleracionesBruscas;
@@ -18,176 +17,61 @@ public class SesionDTO {
     private Integer paradasBruscas;
     private Integer score;
     private Integer tiempoMovimiento;
+
     private LocalDateTime tiempoSesion;
+
+    private Integer anioSesion;
+    private Integer mesSesion;
+    private Integer diaSesion;
 
     private String dniFisio;
     private String dniPaciente;
     private Long idDispositivo;
 
-    public SesionDTO() {
-    	
-    }
+    // getters & setters
 
-    public SesionDTO(String idSesion, Integer aceleracionesBruscas, Integer colisiones, Integer estabilidad, String nivel, Integer paradasBruscas, Integer score, Integer tiempoMovimiento,
-LocalDateTime tiempoSesion, String dniFisio, String dniPaciente, Long idDispositivo) {
-    	
-        this.idSesion = idSesion;
-        this.aceleracionesBruscas = aceleracionesBruscas;
-        this.colisiones = colisiones;
-        this.estabilidad = estabilidad;
-        this.nivel = nivel;
-        this.paradasBruscas = paradasBruscas;
-        this.score = score;
-        this.tiempoMovimiento = tiempoMovimiento;
-        this.tiempoSesion = tiempoSesion;
-        this.dniFisio = dniFisio;
-        this.dniPaciente = dniPaciente;
-        this.idDispositivo = idDispositivo;
-        
-    }
+    public String getIdSesion() { return idSesion; }
+    public void setIdSesion(String idSesion) { this.idSesion = idSesion; }
 
-    public String getIdSesion() {
-    	
-        return idSesion;
-    
-    }
+    public Integer getAceleracionesBruscas() { return aceleracionesBruscas; }
+    public void setAceleracionesBruscas(Integer v) { this.aceleracionesBruscas = v; }
 
-    public void setIdSesion(String idSesion) {
-    
-    	this.idSesion = idSesion;
-    
-    }
+    public Integer getColisiones() { return colisiones; }
+    public void setColisiones(Integer v) { this.colisiones = v; }
 
-    public Integer getAceleracionesBruscas() {
-    
-    	return aceleracionesBruscas;
-    
-    }
+    public Integer getEstabilidad() { return estabilidad; }
+    public void setEstabilidad(Integer v) { this.estabilidad = v; }
 
-    public void setAceleracionesBruscas(Integer aceleracionesBruscas) {
-    
-    	this.aceleracionesBruscas = aceleracionesBruscas;
-    
-    }
+    public String getNivel() { return nivel; }
+    public void setNivel(String v) { this.nivel = v; }
 
-    public Integer getColisiones() {
-    
-    	return colisiones;
-    
-    }
+    public Integer getParadasBruscas() { return paradasBruscas; }
+    public void setParadasBruscas(Integer v) { this.paradasBruscas = v; }
 
-    public void setColisiones(Integer colisiones) {
-    
-    	this.colisiones = colisiones;
-    
-    }
+    public Integer getScore() { return score; }
+    public void setScore(Integer v) { this.score = v; }
 
-    public Integer getEstabilidad() {
-    
-    	return estabilidad;
-    
-    }
+    public Integer getTiempoMovimiento() { return tiempoMovimiento; }
+    public void setTiempoMovimiento(Integer v) { this.tiempoMovimiento = v; }
 
-    public void setEstabilidad(Integer estabilidad) {
-    
-    	this.estabilidad = estabilidad;
-    
-    }
+    public LocalDateTime getTiempoSesion() { return tiempoSesion; }
+    public void setTiempoSesion(LocalDateTime v) { this.tiempoSesion = v; }
 
-    public String getNivel() {
-    
-    	return nivel;
-    
-    }
+    public Integer getAnioSesion() { return anioSesion; }
+    public void setAnioSesion(Integer v) { this.anioSesion = v; }
 
-    public void setNivel(String nivel) {
-    
-    	this.nivel = nivel;
-    
-    }
+    public Integer getMesSesion() { return mesSesion; }
+    public void setMesSesion(Integer v) { this.mesSesion = v; }
 
-    public Integer getParadasBruscas() {
-    
-    	return paradasBruscas;
-    
-    }
+    public Integer getDiaSesion() { return diaSesion; }
+    public void setDiaSesion(Integer v) { this.diaSesion = v; }
 
-    public void setParadasBruscas(Integer paradasBruscas) {
-    
-    	this.paradasBruscas = paradasBruscas;
-    
-    }
+    public String getDniFisio() { return dniFisio; }
+    public void setDniFisio(String v) { this.dniFisio = v; }
 
-    public Integer getScore() {
-     
-    	return score;
-    
-    }
+    public String getDniPaciente() { return dniPaciente; }
+    public void setDniPaciente(String v) { this.dniPaciente = v; }
 
-    public void setScore(Integer score) {
-    
-    	this.score = score;
-    
-    }
-
-    public Integer getTiempoMovimiento() {
-    
-    	return tiempoMovimiento;
-    
-    }
-
-    public void setTiempoMovimiento(Integer tiempoMovimiento) {
-    
-    	this.tiempoMovimiento = tiempoMovimiento;
-    
-    }
-
-    public LocalDateTime getTiempoSesion() {
-    
-    	return tiempoSesion;
-    
-    }
-
-    public void setTiempoSesion(LocalDateTime tiempoSesion) {
-    
-    	this.tiempoSesion = tiempoSesion;
-    
-    }
-
-    public String getDniFisio() {
-    
-    	return dniFisio;
-    
-    }
-
-    public void setDniFisio(String dniFisio) {
-    
-    	this.dniFisio = dniFisio;
-    
-    }
-
-    public String getDniPaciente() {
-    
-    	return dniPaciente;
-    
-    }
-
-    public void setDniPaciente(String dniPaciente) {
-   
-    	this.dniPaciente = dniPaciente;
-    
-    }
-
-    public Long getIdDispositivo() {
-    
-    	return idDispositivo;
-    
-    }
-
-    public void setIdDispositivo(Long idDispositivo) {
-    
-    	this.idDispositivo = idDispositivo;
-    
-    }
-
+    public Long getIdDispositivo() { return idDispositivo; }
+    public void setIdDispositivo(Long v) { this.idDispositivo = v; }
 }

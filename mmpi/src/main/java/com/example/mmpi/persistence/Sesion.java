@@ -1,13 +1,7 @@
 package com.example.mmpi.persistence;
 
 import java.time.LocalDateTime;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "SESION", schema = "mmpi")
@@ -16,6 +10,9 @@ public class Sesion implements java.io.Serializable {
     @Id
     @Column(name = "ID_SESION")
     private String idSesion;
+
+    @Column(name = "NOMBRE_PACIENTE")
+    private String nombrePaciente;
 
     @Column(name = "ACELERACIONES_BRUSCAS")
     private Integer aceleracionesBruscas;
@@ -38,8 +35,18 @@ public class Sesion implements java.io.Serializable {
     @Column(name = "TIEMPO_MOVIMIENTO")
     private Integer tiempoMovimiento;
 
+    // FULL timestamp (NOT just time)
     @Column(name = "TIEMPO_SESION")
     private LocalDateTime tiempoSesion;
+
+    @Column(name = "AÑO_SESION")
+    private Integer anioSesion;
+
+    @Column(name = "MES_SESION")
+    private Integer mesSesion;
+
+    @Column(name = "DIA_SESION")
+    private Integer diaSesion;
 
     @ManyToOne
     @JoinColumn(name = "DNI_FISIO")
@@ -49,157 +56,50 @@ public class Sesion implements java.io.Serializable {
     @JoinColumn(name = "DNI_PACIENTE")
     private Paciente paciente;
 
-    public Sesion() {
-    	
-    }
+    // getters & setters
 
-    public Sesion(String idSesion, Integer aceleracionesBruscas, Integer colisiones, Integer estabilidad, String nivel, Integer paradasBruscas, Integer score, Integer tiempoMovimiento,
-LocalDateTime tiempoSesion, Fisioterapeuta fisioterapeuta, Paciente paciente) {
-    	
-        this.idSesion = idSesion;
-        this.aceleracionesBruscas = aceleracionesBruscas;
-        this.colisiones = colisiones;
-        this.estabilidad = estabilidad;
-        this.nivel = nivel;
-        this.paradasBruscas = paradasBruscas;
-        this.score = score;
-        this.tiempoMovimiento = tiempoMovimiento;
-        this.tiempoSesion = tiempoSesion;
-        this.fisioterapeuta = fisioterapeuta;
-        this.paciente = paciente;
-    
-    }
+    public String getIdSesion() { return idSesion; }
+    public void setIdSesion(String idSesion) { this.idSesion = idSesion; }
 
-    public String getIdSesion() {
-    
-    	return idSesion;
-    
-    }
+    public String getNombrePaciente() { return nombrePaciente; }
+    public void setNombrePaciente(String nombrePaciente) { this.nombrePaciente = nombrePaciente; }
 
-    public void setIdSesion(String idSesion) {
-    
-    	this.idSesion = idSesion;
-    
-    }
+    public Integer getAceleracionesBruscas() { return aceleracionesBruscas; }
+    public void setAceleracionesBruscas(Integer v) { this.aceleracionesBruscas = v; }
 
-    public Integer getAceleracionesBruscas() {
-    
-    	return aceleracionesBruscas;
-    
-    }
+    public Integer getColisiones() { return colisiones; }
+    public void setColisiones(Integer v) { this.colisiones = v; }
 
-    public void setAceleracionesBruscas(Integer aceleracionesBruscas) {
-    
-    	this.aceleracionesBruscas = aceleracionesBruscas;
-    
-    }
+    public Integer getEstabilidad() { return estabilidad; }
+    public void setEstabilidad(Integer v) { this.estabilidad = v; }
 
-    public Integer getColisiones() {
-    
-    	return colisiones;
-    
-    }
+    public String getNivel() { return nivel; }
+    public void setNivel(String nivel) { this.nivel = nivel; }
 
-    public void setColisiones(Integer colisiones) {
-    
-    	this.colisiones = colisiones;
-    
-    }
+    public Integer getParadasBruscas() { return paradasBruscas; }
+    public void setParadasBruscas(Integer v) { this.paradasBruscas = v; }
 
-    public Integer getEstabilidad() {
-    
-    	return estabilidad;
-    
-    }
+    public Integer getScore() { return score; }
+    public void setScore(Integer v) { this.score = v; }
 
-    public void setEstabilidad(Integer estabilidad) {
-    
-    	this.estabilidad = estabilidad;
-    
-    }
+    public Integer getTiempoMovimiento() { return tiempoMovimiento; }
+    public void setTiempoMovimiento(Integer v) { this.tiempoMovimiento = v; }
 
-    public String getNivel() {
-    
-    	return nivel;
-    
-    }
+    public LocalDateTime getTiempoSesion() { return tiempoSesion; }
+    public void setTiempoSesion(LocalDateTime v) { this.tiempoSesion = v; }
 
-    public void setNivel(String nivel) {
-    
-    	this.nivel = nivel;
-    
-    }
+    public Integer getAnioSesion() { return anioSesion; }
+    public void setAnioSesion(Integer v) { this.anioSesion = v; }
 
-    public Integer getParadasBruscas() {
-    
-    	return paradasBruscas;
-    
-    }
+    public Integer getMesSesion() { return mesSesion; }
+    public void setMesSesion(Integer v) { this.mesSesion = v; }
 
-    public void setParadasBruscas(Integer paradasBruscas) {
-    
-    	this.paradasBruscas = paradasBruscas;
-    
-    }
+    public Integer getDiaSesion() { return diaSesion; }
+    public void setDiaSesion(Integer v) { this.diaSesion = v; }
 
-    public Integer getScore() {
-    
-    	return score;
-    
-    }
+    public Fisioterapeuta getFisioterapeuta() { return fisioterapeuta; }
+    public void setFisioterapeuta(Fisioterapeuta f) { this.fisioterapeuta = f; }
 
-    public void setScore(Integer score) {
-    
-    	this.score = score;
-    
-    }
-
-    public Integer getTiempoMovimiento() {
-    
-    	return tiempoMovimiento;
-    
-    }
-
-    public void setTiempoMovimiento(Integer tiempoMovimiento) {
-    
-    	this.tiempoMovimiento = tiempoMovimiento;
-    
-    }
-
-    public LocalDateTime getTiempoSesion() {
-    
-    	return tiempoSesion;
-    
-    }
-
-    public void setTiempoSesion(LocalDateTime tiempoSesion) {
-    
-    	this.tiempoSesion = tiempoSesion;
-    
-    }
-
-    public Fisioterapeuta getFisioterapeuta() {
-    
-    	return fisioterapeuta;
-    
-    }
-
-    public void setFisioterapeuta(Fisioterapeuta fisioterapeuta) {
-    
-    	this.fisioterapeuta = fisioterapeuta;
-    
-    }
-
-    public Paciente getPaciente() {
-    
-    	return paciente;
-    
-    }
-
-    public void setPaciente(Paciente paciente) {
-    
-    	this.paciente = paciente;
-    
-    }
-
+    public Paciente getPaciente() { return paciente; }
+    public void setPaciente(Paciente p) { this.paciente = p; }
 }

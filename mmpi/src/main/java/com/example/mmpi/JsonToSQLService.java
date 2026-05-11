@@ -7,7 +7,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
-import java.sql.Timestamp;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Iterator;
 
 @Service
@@ -19,53 +21,43 @@ public class JsonToSQLService {
     private String folderPath;
 
     public JsonToSQLService(JdbcTemplate jdbcTemplate) {
-
         this.jdbcTemplate = jdbcTemplate;
-
     }
 
     public void loadJsonToDatabase() {
 
-        String sqlSesion = "INSERT INTO SESION " +
-                "(ID_SESION, ACELERACIONES_BRUSCAS, COLISIONES, ESTABILIDAD, NIVEL, PARADAS_BRUSCAS, SCORE, TIEMPO_MOVIMIENTO, TIEMPO_SESION, DNI_FISIO, DNI_PACIENTE) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sqlSesion =
+                "INSERT INTO SESION " +
+                "(ID_SESION, NOMBRE_PACIENTE, ACELERACIONES_BRUSCAS, COLISIONES, ESTABILIDAD, NIVEL, PARADAS_BRUSCAS, SCORE, TIEMPO_MOVIMIENTO, AÑO_SESION, MES_SESION, DIA_SESION, TIEMPO_SESION, DNI_FISIO, DNI_PACIENTE) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         ObjectMapper mapper = new ObjectMapper();
 
         File folder = new File(folderPath);
 
         if (!folder.exists() || !folder.isDirectory()) {
-
             System.err.println("Folder not found: " + folderPath);
             return;
-
         }
 
         File[] files = folder.listFiles((dir, name) -> name.endsWith(".json"));
 
         if (files == null || files.length == 0) {
-
             System.out.println("No JSON files found in: " + folderPath);
             return;
-
         }
 
         int totalInsertadas = 0;
-        int totalSaltadas = 0;
-        int totalPacientesCreados = 0;
 
         for (File file : files) {
 
             System.out.println("Processing file: " + file.getName());
 
             int insertadasArchivo = 0;
-            int saltadasArchivo = 0;
-            int pacientesCreadosArchivo = 0;
 
             try {
 
                 JsonNode root = mapper.readTree(file);
-
                 Iterator<String> userIds = root.fieldNames();
 
                 while (userIds.hasNext()) {
@@ -74,22 +66,10 @@ public class JsonToSQLService {
                     JsonNode userNode = root.get(userId);
 
                     String dniPaciente = crearDniPacienteAutomatico(userId);
-
-                    boolean pacienteCreado = insertarPacientePendienteSiNoExiste(dniPaciente, userId);
-
-                    if (pacienteCreado) {
-
-                        pacientesCreadosArchivo++;
-
-                    }
+                    insertarPacientePendienteSiNoExiste(dniPaciente, userId);
 
                     JsonNode sesionesNode = userNode.get("sesiones");
-
-                    if (sesionesNode == null) {
-
-                        continue;
-
-                    }
+                    if (sesionesNode == null) continue;
 
                     Iterator<String> fechas = sesionesNode.fieldNames();
 
@@ -103,15 +83,6 @@ public class JsonToSQLService {
                         while (sesiones.hasNext()) {
 
                             String idSesion = sesiones.next();
-
-                            if (sesionYaExiste(idSesion)) {
-
-                                actualizarPacienteSesionSiHaceFalta(idSesion, dniPaciente);
-                                saltadasArchivo++;
-                                continue;
-
-                            }
-
                             JsonNode data = sesionesDia.get(idSesion);
 
                             int aceleraciones = data.get("aceleraciones_bruscas").asInt();
@@ -121,15 +92,22 @@ public class JsonToSQLService {
                             int paradas = data.get("paradas_bruscas").asInt();
                             int score = data.get("score").asInt();
 
-                            int tiempoMovimiento = (int) (data.get("tiempo_movimiento").asLong() / 1000);
+                            int tiempoMovimiento =
+                                    (int) (data.get("tiempo_movimiento").asLong() / 1000);
 
-                            long rawTimestamp = data.get("timestamp").asLong();
+                            // ✅ FIXED: proper timestamp conversion
+                            LocalDateTime fechaHora =
+                                    Instant.ofEpochSecond(data.get("timestamp").asLong())
+                                            .atZone(ZoneId.systemDefault())
+                                            .toLocalDateTime();
 
-                            Timestamp tiempoSesion = new Timestamp(rawTimestamp * 1000);
+                            int anio = fechaHora.getYear();
+                            int mes = fechaHora.getMonthValue();
+                            int dia = fechaHora.getDayOfMonth();
 
                             jdbcTemplate.update(sqlSesion,
-
                                     idSesion,
+                                    userId,
                                     aceleraciones,
                                     colisiones,
                                     estabilidad,
@@ -137,110 +115,66 @@ public class JsonToSQLService {
                                     paradas,
                                     score,
                                     tiempoMovimiento,
-                                    tiempoSesion,
+                                    anio,
+                                    mes,
+                                    dia,
+                                    fechaHora,
                                     null,
                                     dniPaciente
-
                             );
 
                             insertadasArchivo++;
-
                         }
-
                     }
-
                 }
 
                 totalInsertadas += insertadasArchivo;
-                totalSaltadas += saltadasArchivo;
-                totalPacientesCreados += pacientesCreadosArchivo;
 
-                System.out.println("Archivo terminado: " + file.getName());
-                System.out.println("Pacientes pendientes creados: " + pacientesCreadosArchivo);
-                System.out.println("Sesiones insertadas: " + insertadasArchivo);
-                System.out.println("Sesiones ya existentes saltadas/actualizadas: " + saltadasArchivo);
+                System.out.println("File finished: " + file.getName());
+                System.out.println("Inserted: " + insertadasArchivo);
 
             } catch (Exception e) {
-
                 System.err.println("Error processing file: " + file.getName());
                 e.printStackTrace();
-
             }
-
         }
 
         System.out.println("All files processed.");
-        System.out.println("Total pacientes pendientes creados: " + totalPacientesCreados);
-        System.out.println("Total sesiones insertadas: " + totalInsertadas);
-        System.out.println("Total sesiones ya existentes saltadas/actualizadas: " + totalSaltadas);
-
-    }
-
-    private boolean sesionYaExiste(String idSesion) {
-
-        String sql = "SELECT COUNT(*) FROM SESION WHERE ID_SESION = ?";
-
-        Integer count = jdbcTemplate.queryForObject(sql, Integer.class, idSesion);
-
-        return count != null && count > 0;
-
+        System.out.println("Total inserted sessions: " + totalInsertadas);
     }
 
     private String crearDniPacienteAutomatico(String userId) {
-
-        String limpio = userId
-                .toUpperCase()
-                .replaceAll("[^A-Z0-9]", "_");
-
-        return "AUTO_" + limpio;
-
+        return "AUTO_" + userId.toUpperCase().replaceAll("[^A-Z0-9]", "_");
     }
 
     private boolean insertarPacientePendienteSiNoExiste(String dniPaciente, String nombrePaciente) {
 
-        String sqlExiste = "SELECT COUNT(*) FROM PACIENTE WHERE DNI_PACIENTE = ?";
+        String sqlExiste =
+                "SELECT COUNT(*) FROM PACIENTE WHERE DNI_PACIENTE = ?";
 
         Integer count = jdbcTemplate.queryForObject(sqlExiste, Integer.class, dniPaciente);
 
-        if (count != null && count > 0) {
+        if (count != null && count > 0) return false;
 
-            return false;
-
-        }
-
-        String sqlInsert = "INSERT INTO PACIENTE " +
+        String sqlInsert =
+                "INSERT INTO PACIENTE " +
                 "(DNI_PACIENTE, NOMBRE, APELLIDOS, DOMICILIO, EMAIL, TELEFONO, EDAD, LOCALIDAD, DATOS_COMPLETOS, DNI_FISIO) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         jdbcTemplate.update(sqlInsert,
-
                 dniPaciente,
                 nombrePaciente,
                 "Pendiente",
                 "Pendiente",
                 "pendiente@pendiente.com",
-                0,
+                "0",
                 null,
                 "Pendiente",
                 0,
                 null
-
         );
 
-        System.out.println("Paciente pendiente creado: " + nombrePaciente + " (" + dniPaciente + ")");
-
+        System.out.println("Paciente created: " + nombrePaciente);
         return true;
-
     }
-
-    private void actualizarPacienteSesionSiHaceFalta(String idSesion, String dniPaciente) {
-
-        String sql = "UPDATE SESION " +
-                "SET DNI_PACIENTE = ? " +
-                "WHERE ID_SESION = ? AND DNI_PACIENTE IS NULL";
-
-        jdbcTemplate.update(sql, dniPaciente, idSesion);
-
-    }
-
 }
