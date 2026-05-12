@@ -1,0 +1,893 @@
+/* ==================================================
+   INFO PAGE - BASE
+================================================== */
+
+.info-page {
+    background: #ececec;
+    font-family: "Inter", sans-serif;
+    min-height: 100vh;
+}
+
+.info-page .container-fluid {
+    min-height: 100vh;
+}
+
+/* ==================================================
+   HEADER SUPERIOR INFO
+================================================== */
+
+.info-page .info-header-container {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+}
+
+.info-page .info-header-logo-side {
+    width: 52px;
+    min-width: 52px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.info-page .info-main-logo {
+    width: 42px;
+    height: 42px;
+    object-fit: contain;
+}
+
+.info-page .info-top-bar-main {
+    flex: 1;
+    min-height: 86px;
+    background: #00045a;
+    border-radius: 28px;
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    box-shadow: 0 10px 24px rgba(0, 8, 57, 0.12);
+}
+
+.info-page .info-user-box {
+    min-height: 56px;
+    border-radius: 18px;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 1.25rem;
+    font-weight: 800;
+    padding: 0 18px;
+    max-width: 560px;
+    overflow: hidden;
+}
+
+.info-page .info-user-box i {
+    font-size: 1.65rem;
+}
+
+.info-page .info-user-box span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.info-page .info-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.info-page .info-header-btn {
+    height: 56px;
+    min-width: 130px;
+    border-radius: 18px;
+    background: #ffffff;
+    color: #00045a;
+    border: 0;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    text-decoration: none;
+    padding: 0 18px;
+    transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.info-page .info-header-btn:hover {
+    background: #f3f3f3;
+    color: #00045a;
+    transform: translateY(-1px);
+}
+
+.info-page .info-icon-btn {
+    width: 56px;
+    height: 56px;
+    border-radius: 18px;
+    border: 0;
+    background: #ffffff;
+    color: #00045a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    text-decoration: none;
+    font-size: 1.25rem;
+    transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.info-page .info-icon-btn:hover {
+    background: #f3f3f3;
+    color: #00045a;
+    transform: translateY(-1px);
+}
+
+/* ==================================================
+   TARJETA PRINCIPAL INFO
+================================================== */
+
+.info-page .info-main-card {
+    background: #f3f3f3;
+    border-radius: 34px;
+    padding: 30px;
+}
+
+.info-page .patient-header-info {
+    background: #00045a;
+    border-radius: 28px;
+    padding: 24px;
+    color: #ffffff;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+}
+
+.info-page .avatar-box {
+    width: 160px;
+    height: 160px;
+    background: #efefef;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.info-page .avatar-box img {
+    width: 125px;
+    height: 125px;
+    object-fit: contain;
+}
+
+.info-page #patient-name {
+    color: #ffffff;
+    font-size: 2rem;
+    line-height: 1.1;
+}
+
+.info-page .patient-meta {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(180px, 1fr));
+    gap: 4px 22px;
+    margin-top: 8px;
+}
+
+.info-page .patient-meta p {
+    margin: 0 0 6px 0;
+    color: #ffffff;
+    font-size: 0.95rem;
+}
+
+.info-page #patient-level {
+    font-weight: 800;
+}
+
+.info-page #patient-warning {
+    border-radius: 14px;
+    width: fit-content;
+}
+
+.info-page #btnCompletarPaciente,
+.info-page #btnEditarPaciente {
+    border-radius: 12px;
+}
+
+/* ==================================================
+   BOTONES REPORTES
+================================================== */
+
+.info-page .btn-report-custom {
+    min-width: 230px;
+    min-height: 44px;
+    border-radius: 16px;
+    font-weight: 800;
+    color: #00045a;
+    border: 0;
+    transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.info-page .btn-report-custom:hover {
+    background: #f3f3f3;
+    color: #00045a;
+    transform: translateY(-1px);
+}
+
+/* ==================================================
+   CALENDARIO - THIN STYLING
+================================================== */
+
+.info-page .calendar-label {
+    font-weight: 800;
+    color: #00045a;
+    margin-bottom: 8px;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.info-page .calendar-input {
+    border-radius: 14px !important;
+    border: 1px solid #d7d7d7 !important;
+    padding: 10px 14px !important;
+    cursor: pointer;
+    background: #ffffff !important;
+    caret-color: transparent;
+    min-height: 42px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #00045a;
+}
+
+.info-page .calendar-input:focus {
+    border-color: #00045a !important;
+    box-shadow: 0 0 0 0.15rem rgba(0, 8, 57, 0.18) !important;
+}
+
+/* ==================================================
+   GRÁFICAS - CHART CONTAINERS
+================================================== */
+
+.info-page .chart-container {
+    background: #ffffff;
+    padding: 28px 34px;
+    padding-bottom: 70px;
+    border-radius: 25px;
+    height: 520px;
+    min-height: 450px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+}
+
+.info-page .chart-container h5 {
+    color: #00045a;
+    font-weight: 900;
+    font-size: 0.95rem;
+    letter-spacing: 0.5px;
+    margin: 0 0 12px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.info-page .chart-container h5 i {
+    font-size: 1.1rem;
+}
+
+.info-page .chart-container canvas {
+    width: 100% !important;
+    height: 100% !important;
+    flex: 1;
+}
+
+/* ==================================================
+   OBSERVACIONES
+================================================== */
+
+.info-page .observations-section {
+    background: #ffffff;
+    border-radius: 22px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+}
+
+.info-page .obs-header {
+    background: #00045a;
+    color: #ffffff;
+    padding: 14px 18px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+}
+
+.info-page .obs-body {
+    padding: 18px;
+}
+
+.info-page #patient-obs {
+    min-height: 110px;
+    border-radius: 16px;
+    resize: vertical;
+    padding-right: 70px;
+}
+
+.info-page #patient-obs:focus {
+    border-color: #00045a;
+    box-shadow: 0 0 0 0.15rem rgba(0, 8, 57, 0.18);
+}
+
+.info-page .btn-save-obs {
+    position: absolute;
+    right: 28px;
+    bottom: 28px;
+    width: 46px;
+    height: 46px;
+    border-radius: 14px;
+    background: #00045a;
+    color: #ffffff;
+    border: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.info-page .btn-save-obs:hover {
+    background: #000839;
+    color: #ffffff;
+}
+
+/* ==================================================
+   FLATPICKR
+================================================== */
+
+.flatpickr-calendar {
+    font-family: "Inter", sans-serif !important;
+    border-radius: 16px !important;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.18) !important;
+    overflow: hidden;
+}
+
+.flatpickr-months,
+.flatpickr-weekdays {
+    background: #00045a !important;
+}
+
+.flatpickr-current-month,
+.flatpickr-current-month .cur-month,
+.flatpickr-current-month input.cur-year,
+.flatpickr-weekday {
+    color: #ffffff !important;
+    font-weight: 800 !important;
+}
+
+.flatpickr-prev-month,
+.flatpickr-next-month {
+    fill: #ffffff !important;
+    color: #ffffff !important;
+}
+
+.flatpickr-day {
+    border-radius: 8px !important;
+}
+
+.flatpickr-day.dia-con-datos {
+    background: #00045a !important;
+    color: #ffffff !important;
+    border: 2px solid #00045a !important;
+    font-weight: bold !important;
+}
+
+.flatpickr-day.semana-con-datos {
+    background: #d7f3df !important;
+    color: #00045a !important;
+    border: 2px solid #198754 !important;
+    font-weight: bold !important;
+}
+
+.flatpickr-day.selected,
+.flatpickr-day.startRange,
+.flatpickr-day.endRange,
+.flatpickr-day.inRange {
+    background: #00045a !important;
+    color: #ffffff !important;
+    border-color: #00045a !important;
+}
+
+/* ==================================================
+   RESPONSIVE INFO
+================================================== */
+
+@media (max-width: 1200px) {
+    .info-page .patient-meta {
+        grid-template-columns: 1fr;
+    }
+
+    .info-page .btn-report-custom {
+        min-width: 210px;
+    }
+}
+
+@media (max-width: 992px) {
+    .info-page .info-header-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .info-page .info-header-logo-side {
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .info-page .info-top-bar-main {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .info-page .info-header-actions {
+        justify-content: flex-end;
+    }
+
+    .info-page .info-user-box {
+        max-width: 100%;
+        padding: 0;
+    }
+
+    .info-page .patient-header-info .row {
+        align-items: flex-start !important;
+    }
+
+    .info-page .btn-report-custom {
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .info-page .info-main-card {
+        padding: 20px;
+        border-radius: 26px;
+    }
+
+    .info-page .patient-header-info {
+        padding: 20px;
+        border-radius: 24px;
+    }
+
+    .info-page .patient-header-info .row {
+        flex-direction: column;
+        align-items: flex-start !important;
+    }
+
+    .info-page .avatar-box {
+        width: 135px;
+        height: 135px;
+    }
+
+    .info-page .avatar-box img {
+        width: 105px;
+        height: 105px;
+    }
+
+    .info-page #patient-name {
+        font-size: 1.55rem;
+    }
+
+    .info-page .chart-container {
+        height: 400px;
+        min-height: 450px;
+    }
+}
+
+/* ==================================================
+   PANEL DESCARGAS
+================================================== */
+
+.info-page .download-panel {
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 20px;
+    padding: 14px;
+    min-width: 310px;
+}
+
+.info-page .download-title {
+    color: #ffffff;
+    font-weight: 800;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.info-page .download-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.info-page .download-grid .btn-report-custom {
+    min-width: 0;
+    width: 100%;
+    font-size: 0.88rem;
+}
+
+.info-page .download-grid .btn-success {
+    background: #198754;
+    color: #ffffff;
+}
+
+.info-page .download-grid .btn-success:hover {
+    background: #157347;
+    color: #ffffff;
+}
+
+@media (max-width: 992px) {
+    .info-page .download-panel {
+        width: 100%;
+        min-width: 100%;
+    }
+}
+
+@media (max-width: 576px) {
+    .info-page .download-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ==================================================
+   PERIODO SELECCIONADO
+================================================== */
+
+.info-page .selected-period-card {
+    background: #ffffff;
+    border-radius: 24px;
+    padding: 18px 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    border-left: 8px solid #00045a;
+}
+
+.info-page .selected-period-label {
+    display: block;
+    color: #777777;
+    font-weight: 800;
+    font-size: 0.9rem;
+    margin-bottom: 3px;
+}
+
+.info-page #selectedPeriodText {
+    margin: 0;
+    color: #00045a;
+    font-weight: 900;
+    font-size: 1.35rem;
+}
+
+.info-page .selected-period-badge {
+    background: #00045a;
+    color: #ffffff;
+    border-radius: 999px;
+    padding: 10px 18px;
+    font-weight: 900;
+    font-size: 0.9rem;
+    white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+    .info-page .selected-period-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+/* ==================================================
+   PANEL DESCARGAS DESPLEGABLE
+================================================== */
+
+.info-page .download-dropdown-panel {
+    min-width: 320px;
+    background: rgba(255, 255, 255, 0.10);
+    border-radius: 22px;
+    padding: 14px;
+    backdrop-filter: blur(4px);
+}
+
+.info-page .download-toggle-btn {
+    width: 100%;
+    min-height: 52px;
+    border-radius: 17px;
+    border: 0;
+    background: #ffffff;
+    color: #00045a;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 18px;
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+    transition: transform 0.18s ease, background 0.18s ease;
+}
+
+.info-page .download-toggle-btn:hover {
+    background: #f4f4f4;
+    color: #00045a;
+    transform: translateY(-2px);
+}
+
+.info-page .download-arrow {
+    transition: transform 0.25s ease;
+}
+
+.info-page .download-toggle-btn[aria-expanded="true"] .download-arrow {
+    transform: rotate(180deg);
+}
+
+.info-page .download-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    animation: aparecerDescargas 0.22s ease;
+}
+
+.info-page .btn-report-custom {
+    min-width: 0;
+    width: 100%;
+    min-height: 46px;
+    border-radius: 15px;
+    font-weight: 900;
+    font-size: 0.9rem;
+    border: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.info-page .download-grid .btn-light {
+    color: #00045a;
+    background: #ffffff;
+}
+
+.info-page .download-grid .btn-light:hover {
+    background: #f1f1f1;
+    color: #00045a;
+}
+
+.info-page .download-grid .btn-success {
+    background: #198754;
+}
+
+.info-page .download-grid .btn-success:hover {
+    background: #157347;
+}
+
+@keyframes aparecerDescargas {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 992px) {
+    .info-page .download-dropdown-panel {
+        min-width: 100%;
+        width: 100%;
+    }
+}
+
+@media (max-width: 576px) {
+    .info-page .download-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ==================================================
+   RESUMEN KPI DEL PERIODO
+================================================== */
+
+.info-page .patient-kpi-section {
+    background: #ffffff;
+    border-radius: 26px;
+    padding: 22px;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.05);
+}
+
+.info-page .patient-kpi-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 18px;
+}
+
+.info-page .patient-kpi-label {
+    color: #777777;
+    font-weight: 800;
+    font-size: 0.9rem;
+}
+
+.info-page .patient-kpi-header h3 {
+    color: #00045a;
+    font-weight: 900;
+    font-size: 1.35rem;
+    margin: 2px 0 0 0;
+}
+
+.info-page .patient-kpi-header i {
+    width: 48px;
+    height: 48px;
+    border-radius: 16px;
+    background: #00045a;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.45rem;
+}
+
+.info-page .patient-kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+}
+
+.info-page .patient-kpi-card {
+    background: #f5f6fa;
+    border: 1px solid #dedede;
+    border-radius: 20px;
+    min-height: 92px;
+    padding: 16px 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.info-page .patient-kpi-number {
+    color: #00045a;
+    font-weight: 900;
+    font-size: 1.75rem;
+    line-height: 1.1;
+    text-align: center;
+}
+
+.info-page .patient-kpi-text {
+    color: #666666;
+    font-weight: 700;
+    font-size: 0.92rem;
+    margin-top: 7px;
+    text-align: center;
+}
+
+.info-page .patient-kpi-level .patient-kpi-number {
+    font-size: 1.35rem;
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@media (max-width: 1200px) {
+    .info-page .patient-kpi-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 576px) {
+    .info-page .patient-kpi-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .info-page .patient-kpi-header {
+        align-items: flex-start;
+    }
+}
+
+/* ==================================================
+   INFORMACION.HTML - LOGO Y USUARIO HEADER MÁS GRANDES
+================================================== */
+
+.info-page .info-header-container {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.info-page .info-header-logo-side {
+    width: 92px;
+    min-width: 92px;
+    height: 92px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.info-page .info-main-logo {
+    width: 80px !important;
+    height: 80px !important;
+    max-width: 80px !important;
+    max-height: 80px !important;
+    object-fit: contain;
+    display: block;
+}
+
+.info-page .info-top-bar-main {
+    min-height: 92px;
+    padding: 16px 22px;
+    border-radius: 30px;
+}
+
+.info-page .info-user-box {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 1.45rem;
+    font-weight: 900;
+    color: #ffffff;
+}
+
+.info-page .info-user-box i {
+    font-size: 2.15rem;
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+    border-radius: 50%;
+    background: #ffffff;
+    color: #00045a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.info-page .info-user-box span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.info-page .info-header-btn,
+.info-page .info-icon-btn {
+    min-height: 52px;
+    border-radius: 18px;
+    font-size: 1rem;
+    font-weight: 900;
+}
+
+.info-page .info-icon-btn {
+    width: 52px;
+    min-width: 52px;
+}
+
+@media (max-width: 992px) {
+    .info-page .info-header-container {
+        gap: 16px;
+    }
+
+    .info-page .info-header-logo-side {
+        width: 76px;
+        min-width: 76px;
+        height: 76px;
+    }
+
+    .info-page .info-main-logo {
+        width: 66px !important;
+        height: 66px !important;
+    }
+
+    .info-page .info-user-box {
+        font-size: 1.15rem;
+    }
+
+    .info-page .info-user-box i {
+        font-size: 1.8rem;
+        width: 38px;
+        height: 38px;
+        min-width: 38px;
+    }
+}

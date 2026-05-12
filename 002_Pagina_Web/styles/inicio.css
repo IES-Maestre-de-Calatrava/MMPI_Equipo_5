@@ -1,0 +1,562 @@
+/* ==================================================
+   INICIO PAGE
+================================================== */
+
+.inicio-page {
+    background: #ececec;
+    font-family: 'Inter', sans-serif;
+}
+
+.inicio-page .container-fluid {
+    min-height: 100vh;
+}
+
+/* ==================================================
+   HEADER PRINCIPAL
+================================================== */
+
+.inicio-page .header-container {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+}
+
+.inicio-page .header-logo-side {
+    width: 52px;
+    min-width: 52px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.inicio-page .main-logo {
+    width: 42px;
+    height: 42px;
+    object-fit: contain;
+}
+
+.inicio-page .top-bar-main {
+    flex: 1;
+    min-height: 86px;
+    background: #00045a;
+    border-radius: 28px;
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    box-shadow: 0 10px 24px rgba(0, 8, 57, 0.12);
+}
+
+/* ==================================================
+   BLOQUE BIENVENIDO
+================================================== */
+
+.inicio-page .welcome-pill {
+    min-width: 300px;
+    max-width: 300px;
+    min-height: 56px;
+    border-radius: 18px;
+    background: #f0d57a;
+    color: #1d1d1d;
+    padding: 10px 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    line-height: 1.05;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.05);
+}
+
+.inicio-page .welcome-label {
+    font-size: 0.95rem;
+    font-weight: 700;
+}
+
+.inicio-page .welcome-name {
+    font-size: 1.55rem;
+    font-weight: 800;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* ==================================================
+   BUSCADOR
+================================================== */
+
+.inicio-page .search-center-wrap {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.inicio-page .search-block {
+    width: 100%;
+    max-width: 720px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.inicio-page .search-input-custom {
+    height: 56px;
+    border: 0;
+    border-radius: 18px;
+    padding: 0 20px;
+    font-size: 1.05rem;
+    box-shadow: none;
+}
+
+.inicio-page .search-input-custom:focus {
+    box-shadow: none;
+    border: 0;
+}
+
+.inicio-page .btn-search-custom {
+    height: 56px;
+    min-width: 170px;
+    border-radius: 18px;
+    background: #ffffff;
+    color: #00045a;
+    border: 0;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+}
+
+.inicio-page .btn-search-custom:hover {
+    background: #f3f3f3;
+    color: #00045a;
+}
+
+/* ==================================================
+   BOTONES DERECHA
+================================================== */
+
+.inicio-page .header-actions-right {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.inicio-page .icon-btn {
+    width: 56px;
+    height: 56px;
+    border-radius: 18px;
+    border: 0;
+    background: #ffffff;
+    color: #00045a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    text-decoration: none;
+    font-size: 1.25rem;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.inicio-page .icon-btn:hover {
+    transform: translateY(-1px);
+    color: #00045a;
+    background: #f3f3f3;
+}
+
+/* ==================================================
+   CONTENEDOR PRINCIPAL
+================================================== */
+
+.inicio-page .main-content-card {
+    background: #f3f3f3;
+    border-radius: 34px;
+    padding: 30px;
+}
+
+.inicio-page .section-title {
+    background: #00045a;
+    color: #ffffff;
+    border-radius: 20px;
+    padding: 18px 22px;
+    margin-bottom: 24px;
+    font-size: 1.95rem;
+    font-weight: 800;
+}
+
+/* ==================================================
+   TARJETAS PACIENTE
+================================================== */
+
+.inicio-page #patient-container > div {
+    display: flex;
+}
+
+.inicio-page .patient-card-horizontal {
+    width: 100%;
+    background: #00045a;
+    border-radius: 24px;
+    cursor: pointer;
+    overflow: hidden;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.inicio-page .patient-card-horizontal:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.13);
+}
+
+.inicio-page .patient-card-inner {
+    min-height: 230px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 16px;
+}
+
+.inicio-page .patient-card-image-side {
+    width: 165px;
+    min-width: 165px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.inicio-page .patient-avatar-box {
+    width: 150px;
+    height: 150px;
+    background: #efefef;
+    border-radius: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.inicio-page .patient-avatar-img {
+    max-width: 115px;
+    max-height: 115px;
+    object-fit: contain;
+    display: block;
+}
+
+.inicio-page .patient-card-info-side {
+    flex: 1;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 0;
+}
+
+.inicio-page .patient-title-compact {
+    margin: 0 0 10px 0;
+    color: #ffffff;
+    font-size: 1.15rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    line-height: 1.15;
+}
+
+.inicio-page .patient-info-compact {
+    margin-bottom: 10px;
+}
+
+.inicio-page .patient-info-compact p {
+    margin: 0 0 6px 0;
+    color: #ffffff;
+    font-size: 0.98rem;
+    font-weight: 600;
+}
+
+.inicio-page .patient-desc-compact {
+    margin: 0 0 10px 0;
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 0.96rem;
+}
+
+.inicio-page .patient-alert-compact {
+    border-radius: 10px;
+    font-size: 0.95rem;
+}
+
+.inicio-page .patient-complete-compact {
+    align-self: flex-start;
+    font-size: 0.96rem;
+}
+
+/* ==================================================
+   MODAL CERRAR SESIÓN
+================================================== */
+
+.modal-logout-mmpi {
+    border: 0;
+    border-radius: 28px;
+    overflow: hidden;
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.35);
+}
+
+.logout-icon-circle {
+    width: 82px;
+    height: 82px;
+    border-radius: 50%;
+    background: #00045a;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.3rem;
+    box-shadow: 0 12px 28px rgba(0, 4, 90, 0.25);
+}
+
+.btn-logout-modal {
+    min-width: 150px;
+    min-height: 48px;
+    border-radius: 16px;
+    font-weight: 800;
+    border: 0;
+}
+
+.btn-logout-modal:hover {
+    transform: translateY(-1px);
+}
+
+.modal-backdrop.show {
+    opacity: 0.55;
+}
+
+/* ==================================================
+   RESPONSIVE
+================================================== */
+
+@media (max-width: 1200px) {
+    .inicio-page .welcome-pill {
+        min-width: 250px;
+        max-width: 250px;
+    }
+
+    .inicio-page .search-block {
+        max-width: 520px;
+    }
+}
+
+@media (max-width: 992px) {
+    .inicio-page .header-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .inicio-page .header-logo-side {
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .inicio-page .top-bar-main {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .inicio-page .welcome-pill {
+        max-width: 100%;
+        min-width: 100%;
+    }
+
+    .inicio-page .search-center-wrap {
+        width: 100%;
+    }
+
+    .inicio-page .search-block {
+        max-width: 100%;
+    }
+
+    .inicio-page .header-actions-right {
+        justify-content: flex-end;
+    }
+}
+
+@media (max-width: 768px) {
+    .inicio-page .patient-card-inner {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .inicio-page .patient-card-image-side {
+        width: 100%;
+        min-width: 100%;
+        justify-content: flex-start;
+    }
+
+    .inicio-page .patient-avatar-box {
+        width: 130px;
+        height: 130px;
+    }
+
+    .inicio-page .section-title {
+        font-size: 1.55rem;
+    }
+}
+
+/* ==================================================
+   AJUSTE NOMBRE USUARIO HEADER
+================================================== */
+
+.inicio-page .welcome-pill {
+    min-width: 300px;
+    max-width: 430px;
+    width: fit-content;
+    flex: 0 1 auto;
+    padding-left: 18px;
+    padding-right: 24px;
+}
+
+.inicio-page .welcome-name {
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.inicio-page .search-center-wrap {
+    min-width: 260px;
+}
+
+/* En pantallas medianas dejamos que crezca menos */
+@media (max-width: 1200px) {
+    .inicio-page .welcome-pill {
+        min-width: 260px;
+        max-width: 360px;
+    }
+}
+
+/* En móvil ocupa todo */
+@media (max-width: 992px) {
+    .inicio-page .welcome-pill {
+        width: 100%;
+        min-width: 100%;
+        max-width: 100%;
+    }
+}
+
+/* ==================================================
+   LOGO HEADER MÁS GRANDE
+================================================== */
+
+.inicio-page .header-logo-side {
+    width: 86px;
+    min-width: 86px;
+    height: 86px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.inicio-page .main-logo {
+    width: 76px;
+    height: 76px;
+    object-fit: contain;
+    display: block;
+}
+
+/* ==================================================
+   HEADER LOGO + USUARIO MÁS GRANDES
+================================================== */
+
+.inicio-page .header-container {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.inicio-page .header-logo-side {
+    width: 90px;
+    min-width: 90px;
+    height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.inicio-page .main-logo {
+    width: 78px;
+    height: 78px;
+    object-fit: contain;
+    display: block;
+}
+
+/* Caja de bienvenida / usuario */
+.inicio-page .welcome-pill {
+    min-width: 320px;
+    max-width: 420px;
+    width: auto;
+    min-height: 60px;
+    border-radius: 20px;
+    background: #f0d57a;
+    color: #1d1d1d;
+    padding: 12px 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    line-height: 1.05;
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05);
+    flex: 0 1 auto;
+}
+
+.inicio-page .welcome-label {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 2px;
+}
+
+.inicio-page .welcome-name {
+    font-size: 1.95rem;
+    font-weight: 800;
+    line-height: 1.05;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Si el texto es un poco largo, que la caja tenga algo más de aire */
+@media (max-width: 1200px) {
+    .inicio-page .welcome-pill {
+        min-width: 280px;
+        max-width: 360px;
+    }
+
+    .inicio-page .welcome-name {
+        font-size: 1.7rem;
+    }
+}
+
+@media (max-width: 992px) {
+    .inicio-page .header-logo-side {
+        width: 76px;
+        min-width: 76px;
+        height: 76px;
+    }
+
+    .inicio-page .main-logo {
+        width: 64px;
+        height: 64px;
+    }
+
+    .inicio-page .welcome-pill {
+        min-width: 100%;
+        max-width: 100%;
+    }
+
+    .inicio-page .welcome-name {
+        font-size: 1.55rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .inicio-page .welcome-label {
+        font-size: 0.9rem;
+    }
+
+    .inicio-page .welcome-name {
+        font-size: 1.35rem;
+    }
+}

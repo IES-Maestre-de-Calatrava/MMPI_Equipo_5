@@ -1,0 +1,363 @@
+/* ==================================================
+   TOASTS
+================================================== */
+
+.toast-container-mmpi {
+    position: fixed;
+    right: 28px;
+    bottom: 28px;
+    z-index: 999999;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    pointer-events: none;
+}
+
+.toast-mmpi {
+    width: 440px;
+    max-width: calc(100vw - 56px);
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 14px 38px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+    opacity: 0;
+    transform: translateX(35px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    pointer-events: auto;
+    border-left: 8px solid #0d6efd;
+}
+
+.toast-mmpi.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.toast-mmpi.hide {
+    opacity: 0;
+    transform: translateX(35px);
+}
+
+.toast-mmpi-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 18px 18px 15px 18px;
+}
+
+.toast-mmpi-icon {
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-size: 1.25rem;
+}
+
+.toast-mmpi-text {
+    flex: 1;
+    min-width: 0;
+}
+
+.toast-mmpi-title {
+    font-size: 1.08rem;
+    font-weight: 800;
+    margin-bottom: 4px;
+    color: #111827;
+}
+
+.toast-mmpi-message {
+    font-size: 0.98rem;
+    color: #4b5563;
+    line-height: 1.4;
+    word-break: break-word;
+}
+
+.toast-mmpi-progress {
+    height: 5px;
+    width: 100%;
+    background: #0d6efd;
+}
+
+.toast-mmpi.success {
+    border-left-color: #198754;
+    background: #ffffff;
+}
+
+.toast-mmpi.success .toast-mmpi-icon,
+.toast-mmpi.success .toast-mmpi-progress {
+    background: #198754;
+}
+
+.toast-mmpi.danger {
+    border-left-color: #dc3545;
+    background: #ffffff;
+}
+
+.toast-mmpi.danger .toast-mmpi-icon,
+.toast-mmpi.danger .toast-mmpi-progress {
+    background: #dc3545;
+}
+
+.toast-mmpi.warning {
+    border-left-color: #e0a800;
+    background: #ffc107;
+}
+
+.toast-mmpi.warning .toast-mmpi-title,
+.toast-mmpi.warning .toast-mmpi-message {
+    color: #111111;
+}
+
+.toast-mmpi.warning .toast-mmpi-icon {
+    background: rgba(0, 0, 0, 0.14);
+    color: #111111;
+}
+
+.toast-mmpi.warning .toast-mmpi-progress {
+    background: #7a5600;
+}
+
+.toast-mmpi.info {
+    border-left-color: #0dcaf0;
+    background: #ffffff;
+}
+
+.toast-mmpi.info .toast-mmpi-icon,
+.toast-mmpi.info .toast-mmpi-progress {
+    background: #0dcaf0;
+}
+
+/* ==================================================
+   CAMPANA
+================================================== */
+
+.btn-notif,
+#btnNotifications,
+.btn-navy-icon {
+    position: relative !important;
+}
+
+.notification-badge-mmpi {
+    position: absolute;
+    top: -7px;
+    right: -7px;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 5px;
+    border-radius: 999px;
+    background: #dc3545;
+    color: #ffffff;
+    font-size: 0.72rem;
+    font-weight: 800;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #ffffff;
+    line-height: 1;
+}
+
+/* ==================================================
+   PANEL DESPLEGABLE DE NOTIFICACIONES
+================================================== */
+
+.notification-panel-mmpi {
+    position: fixed !important;
+    top: 88px !important;
+    right: 28px !important;
+    width: 440px !important;
+    max-width: calc(100vw - 40px) !important;
+    max-height: 620px !important;
+    background: #ffffff !important;
+    border-radius: 22px !important;
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.28) !important;
+    z-index: 999998 !important;
+    overflow: hidden !important;
+    display: none !important;
+    border: 1px solid rgba(0, 8, 57, 0.12) !important;
+}
+
+.notification-panel-mmpi.show {
+    display: block !important;
+}
+
+.notification-panel-header-mmpi {
+    padding: 18px 18px 13px 18px;
+    background: #000839;
+    color: #ffffff;
+}
+
+.notification-panel-title-mmpi {
+    font-weight: 800;
+    font-size: 1.12rem;
+    margin: 0;
+}
+
+.notification-panel-subtitle-mmpi {
+    font-size: 0.82rem;
+    opacity: 0.82;
+    margin-top: 3px;
+}
+
+.notification-filters-mmpi {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    padding: 14px 18px 12px 18px;
+    border-bottom: 1px solid #e5e7eb;
+    background: #f8f9fa;
+}
+
+.notification-filter-btn-mmpi {
+    border: 0;
+    border-radius: 999px;
+    padding: 8px 12px;
+    font-size: 0.78rem;
+    font-weight: 800;
+    background: #e5e7eb;
+    color: #111827;
+    cursor: pointer;
+}
+
+.notification-filter-btn-mmpi:hover {
+    background: #d1d5db;
+}
+
+.notification-filter-btn-mmpi.active {
+    background: #000839;
+    color: #ffffff;
+}
+
+.notification-clear-mmpi {
+    margin-left: auto;
+    border: 0;
+    border-radius: 999px;
+    padding: 8px 12px;
+    font-size: 0.78rem;
+    font-weight: 800;
+    background: #dc3545;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.notification-clear-mmpi:hover {
+    background: #bb2d3b;
+}
+
+.notification-list-mmpi {
+    max-height: 430px;
+    overflow-y: auto;
+    padding: 12px;
+    background: #ffffff;
+}
+
+.notification-item-mmpi {
+    display: flex;
+    gap: 12px;
+    padding: 13px;
+    border-radius: 16px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: transform 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+}
+
+.notification-item-mmpi:hover {
+    transform: translateY(-1px);
+    background: #f8f9fa;
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+}
+
+.notification-item-icon-mmpi {
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.notification-item-icon-mmpi.nuevo {
+    background: #dbeafe;
+    color: #0d6efd;
+}
+
+.notification-item-icon-mmpi.pendiente {
+    background: #fff3cd;
+    color: #7a5600;
+}
+
+.notification-item-icon-mmpi.aviso {
+    background: #ffc107;
+    color: #111111;
+}
+
+.notification-item-content-mmpi {
+    flex: 1;
+    min-width: 0;
+}
+
+.notification-item-title-mmpi {
+    font-weight: 800;
+    color: #111827;
+    font-size: 0.93rem;
+    margin-bottom: 2px;
+}
+
+.notification-item-message-mmpi {
+    color: #4b5563;
+    font-size: 0.84rem;
+    line-height: 1.35;
+}
+
+.notification-item-date-mmpi {
+    color: #9ca3af;
+    font-size: 0.72rem;
+    margin-top: 5px;
+}
+
+.notification-empty-mmpi {
+    text-align: center;
+    padding: 35px 18px;
+    color: #6b7280;
+}
+
+.notification-empty-mmpi i {
+    font-size: 2rem;
+    display: block;
+    margin-bottom: 8px;
+    color: #9ca3af;
+}
+
+/* ==================================================
+   RESPONSIVE
+================================================== */
+
+@media (max-width: 576px) {
+    .toast-container-mmpi {
+        left: 14px;
+        right: 14px;
+        bottom: 14px;
+    }
+
+    .toast-mmpi {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .toast-mmpi-content {
+        padding: 16px;
+    }
+
+    .notification-panel-mmpi {
+        left: 14px !important;
+        right: 14px !important;
+        top: 75px !important;
+        width: auto !important;
+        max-width: none !important;
+    }
+}

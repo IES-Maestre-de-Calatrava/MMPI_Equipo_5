@@ -1,0 +1,290 @@
+/* ==================================================
+   PALETA Y VARIABLES
+================================================== */
+
+:root {
+    --primary-navy: #000839;
+    --primary-navy-soft: #07125a;
+    --page-bg: #f0f2f5;
+    --input-bg: #f8f9fa;
+    --border-color: #dee2e6;
+    --text-muted: #6c757d;
+}
+
+/* ==================================================
+   CONFIGURACIÓN GENERAL
+================================================== */
+
+body {
+    font-family: "Inter", sans-serif;
+    background-color: var(--page-bg) !important;
+    min-height: 100vh;
+}
+
+/* ==================================================
+   TARJETA PRINCIPAL
+================================================== */
+
+.registro-card {
+    max-width: 900px;
+    width: 100%;
+    border-radius: 26px;
+    overflow: hidden;
+    background: #ffffff;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.08) !important;
+}
+
+.card-body {
+    overflow: hidden;
+}
+
+/* ==================================================
+   CABECERA / LOGO
+================================================== */
+
+.app-logo {
+    width: 62px !important;
+    height: 62px !important;
+    max-width: 62px !important;
+    max-height: 62px !important;
+    min-width: 62px !important;
+    min-height: 62px !important;
+    object-fit: contain !important;
+    display: inline-block !important;
+}
+
+#tituloFormularioPaciente {
+    color: #111827;
+    font-size: 2rem;
+}
+
+#subtituloFormularioPaciente {
+    font-size: 1rem;
+}
+
+/* ==================================================
+   FOTO PERFIL OPCIONAL
+================================================== */
+
+.patient-photo-card {
+    background: #f7f7f8;
+    border: 1px solid #dedede;
+    border-radius: 24px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    box-shadow: 0 6px 18px rgba(0, 8, 57, 0.04);
+}
+
+.patient-photo-preview {
+    width: 118px;
+    height: 118px;
+    min-width: 118px;
+    border-radius: 18px;
+    background: #ffffff;
+    border: 2px solid #d5d5d5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.patient-photo-preview img {
+    width: 92px;
+    height: 92px;
+    object-fit: contain;
+}
+
+.patient-photo-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.patient-photo-title {
+    color: var(--primary-navy);
+    font-weight: 900;
+    font-size: 1.08rem;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin-bottom: 10px;
+}
+
+.patient-photo-title i {
+    color: var(--primary-navy);
+}
+
+.patient-photo-alert {
+    background: #e7e8eb;
+    border: none;
+    border-radius: 15px;
+    padding: 12px 14px;
+    color: #3f4650;
+    font-size: 0.92rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.patient-photo-alert i {
+    color: #5d6470;
+}
+
+.patient-photo-btn {
+    border-radius: 14px !important;
+    padding: 10px 16px !important;
+    font-weight: 800;
+    background: #ffffff !important;
+    color: #6c757d !important;
+    border: 1px solid #adb5bd !important;
+}
+
+.patient-photo-btn:disabled {
+    opacity: 0.8;
+    cursor: not-allowed;
+}
+
+/* ==================================================
+   INPUTS PERSONALIZADOS
+================================================== */
+
+.custom-input {
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    background-color: var(--input-bg);
+    transition: all 0.25s ease;
+}
+
+.custom-input:focus-within {
+    border-color: var(--primary-navy);
+    box-shadow: 0 0 0 0.22rem rgba(0, 8, 57, 0.10);
+    background-color: #ffffff;
+}
+
+.custom-input .input-group-text {
+    background-color: transparent;
+    border: none;
+    color: var(--primary-navy);
+    padding-left: 16px;
+    padding-right: 10px;
+}
+
+.custom-input .form-control,
+.custom-input .form-select {
+    background-color: transparent;
+    border: none;
+    padding: 13px 12px;
+    font-size: 0.96rem;
+    color: #111827;
+}
+
+.custom-input .form-control:focus,
+.custom-input .form-select:focus {
+    box-shadow: none;
+    background-color: #ffffff;
+}
+
+/* ==================================================
+   LABELS
+================================================== */
+
+.form-label {
+    margin-bottom: 0.5rem;
+    color: #111111;
+    font-size: 0.92rem;
+}
+
+/* ==================================================
+   BOTONES
+================================================== */
+
+.btn-primary {
+    background-color: var(--primary-navy) !important;
+    border: 2px solid var(--primary-navy) !important;
+    color: #ffffff !important;
+    border-radius: 14px !important;
+    padding: 12px !important;
+    font-weight: 800;
+    transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-navy-soft) !important;
+    border-color: var(--primary-navy-soft) !important;
+    color: #ffffff !important;
+    transform: translateY(-2px);
+}
+
+.btn-navy-outline {
+    border: 2px solid var(--primary-navy) !important;
+    color: var(--primary-navy) !important;
+    background-color: #ffffff !important;
+    border-radius: 14px;
+    padding: 12px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.btn-navy-outline:hover {
+    background-color: var(--primary-navy) !important;
+    color: #ffffff !important;
+    transform: translateY(-2px);
+}
+
+#btnLimpiar {
+    border-radius: 14px !important;
+    padding: 12px !important;
+    border: 1px solid var(--text-muted) !important;
+    color: var(--text-muted) !important;
+    background: #ffffff !important;
+    font-weight: 800;
+    transition: all 0.2s ease;
+}
+
+#btnLimpiar:hover {
+    background: #f1f1f1 !important;
+    color: #333333 !important;
+    transform: translateY(-2px);
+}
+
+/* ==================================================
+   RESPONSIVE
+================================================== */
+
+@media (max-width: 768px) {
+    .registro-card {
+        margin: 15px;
+        border-radius: 22px;
+    }
+
+    .card-body {
+        padding: 2rem !important;
+    }
+
+    .patient-photo-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .patient-photo-preview {
+        width: 110px;
+        height: 110px;
+        min-width: 110px;
+    }
+
+    .patient-photo-preview img {
+        width: 82px;
+        height: 82px;
+    }
+
+    #tituloFormularioPaciente {
+        font-size: 1.65rem;
+    }
+}

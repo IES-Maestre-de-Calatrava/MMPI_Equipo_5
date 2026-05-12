@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vista de Pacientes - MMPI</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <link rel="stylesheet" href="../styles/inicio.css?v=122">
+    <link rel="stylesheet" href="../styles/notificaciones.css?v=4">
+
+    <link rel="icon" type="image/x-icon" href="../media/imgs_important/favicon.ico">
+</head>
+
+<body class="inicio-page">
+
+    <div class="container-fluid p-4">
+
+        <header class="header-container mb-4">
+
+            <div class="header-logo-side">
+                <img src="../media/imgs_important/final.png" alt="Logo MMPI" class="main-logo">
+            </div>
+
+            <div class="top-bar-main">
+
+                <div class="welcome-pill">
+                    <div class="welcome-label">Bienvenido</div>
+                    <div class="welcome-name" id="nombreUsuarioHeader">Usuario</div>
+                </div>
+
+                <div class="search-center-wrap">
+                    <div class="search-block">
+                        <input
+                            type="text"
+                            id="searchInput"
+                            class="form-control search-input-custom"
+                            placeholder="Buscar paciente..."
+                        >
+
+                        <button id="btnSearch" class="btn btn-search-custom">
+                            <i class="bi bi-search me-2"></i>Búsqueda
+                        </button>
+                    </div>
+                </div>
+
+                <div class="header-actions-right">
+
+                    <button class="icon-btn btn-notif" id="btnNotifications" type="button" title="Notificaciones">
+                        <i class="bi bi-bell-fill"></i>
+                    </button>
+
+                    <button type="button" id="btnLogout" class="icon-btn btn-power" title="Cerrar sesión">
+                        <i class="bi bi-power"></i>
+                    </button>
+
+                </div>
+
+            </div>
+
+        </header>
+
+        <main class="main-content-card shadow-sm">
+
+            <h2 class="section-title">
+                Vista de Pacientes
+            </h2>
+
+            <div class="row g-4 mt-2" id="patient-container">
+                <div class="text-center p-5" id="loading">
+                    <div class="spinner-border text-primary" role="status"></div>
+                    <p class="mt-2">Cargando pacientes...</p>
+                </div>
+            </div>
+
+        </main>
+
+    </div>
+
+    <!-- Modal cerrar sesión -->
+    <div class="modal fade" id="modalCerrarSesion" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content modal-logout-mmpi">
+
+                <div class="modal-body text-center p-4 p-md-5">
+
+                    <div class="logout-icon-circle mx-auto mb-3">
+                        <i class="bi bi-power"></i>
+                    </div>
+
+                    <h4 class="fw-bold mb-2">
+                        ¿Cerrar sesión?
+                    </h4>
+
+                    <p class="text-muted mb-4">
+                        Se cerrará tu sesión actual y volverás a la pantalla de inicio.
+                    </p>
+
+                    <div class="d-flex gap-3 justify-content-center flex-wrap">
+
+                        <button type="button" class="btn btn-danger btn-logout-modal" data-bs-dismiss="modal">
+                            <i class="bi bi-x-lg me-2"></i>Cancelar
+                        </button>
+
+                        <button type="button" id="btnConfirmLogout" class="btn btn-success btn-logout-modal">
+                            <i class="bi bi-check-lg me-2"></i>Aceptar
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/notificaciones.js?v=4"></script>
+    <script src="../js/inicio.js?v=123"></script>
+
+</body>
+</html>
